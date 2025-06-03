@@ -1,16 +1,13 @@
 // The exported code uses Tailwind CSS. Install Tailwind CSS in your dev environment to ensure all styles work.
 import React, { useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ContainerType } from "./containerTypes";
-import { useNavigate } from "react-router-dom";
+
 // ...existing code...
-import Product from "./Advanced-Container-Products-Page";
+
 const Compare: React.FC = () => {
   // Get location with state
-  const { id } = useParams<{ id: string }>();
-  const container = ContainerType.find((c) => c.id === Number(id));
 
-  const navigate = useNavigate();
   const [showQuoteModal, setShowQuoteModal] = useState(false);
   const [quoteItems, setQuoteItems] = useState<
     { id: number; quantity: number }[]
@@ -43,19 +40,6 @@ const Compare: React.FC = () => {
     } else {
       setQuoteItems([...quoteItems, { id, quantity: 1 }]);
     }
-  };
-
-  // Remove from quote
-  const removeFromQuote = (id: number) => {
-    setQuoteItems(quoteItems.filter((item) => item.id !== id));
-  };
-
-  // Update quantity
-  const updateQuantity = (id: number, quantity: number) => {
-    if (quantity < 1) return;
-    setQuoteItems(
-      quoteItems.map((item) => (item.id === id ? { ...item, quantity } : item))
-    );
   };
 
   // Calculate total

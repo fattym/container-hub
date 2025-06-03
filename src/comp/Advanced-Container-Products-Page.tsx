@@ -5,7 +5,7 @@ import { ContainerType } from "./containerTypes";
 
 const Product: React.FC = () => {
   // Price range state
-  const [priceRange, setPriceRange] = useState<[number, number]>([1000, 10000]);
+  const [priceRange] = useState<[number, number]>([1000, 10000]);
   // Filter states
   const [containerTypeFilter, setContainerTypeFilter] = useState<string>("all");
   const [sizeFilter, setSizeFilter] = useState<string>("all");
@@ -144,25 +144,12 @@ const Product: React.FC = () => {
     return ContainerType.find((container) => container.id === id);
   };
 
-  // Format price as currency
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(price);
-  };
+  // Handle navigation to quick view modal
 
   // Handle navigation to comparison page with selected items
 
   const navigate = useNavigate();
-  const [selectedItems, setSelectedItems] = useState<number[]>([]); // State to hold selected container IDs
-  const handleSelectItem = (itemId: number) => {
-    setSelectedItems((prevSelected) =>
-      prevSelected.includes(itemId)
-        ? prevSelected.filter((id) => id !== itemId)
-        : [...prevSelected, itemId]
-    );
-  };
+  const [selectedItems] = useState<number[]>([]); // State to hold selected container IDs
 
   const handleCompareClick = () => {
     if (selectedItems.length > 0) {

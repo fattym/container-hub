@@ -65,31 +65,4 @@ const Navbar: React.FC = () => {
   );
 };
 
-const styles: { [key: string]: React.CSSProperties } = {
-  nav: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: "1rem 2rem",
-    background: "#222",
-    color: "#fff",
-  },
-  logo: {
-    fontWeight: "bold",
-    fontSize: "1.5rem",
-  },
-  navLinks: {
-    listStyle: "none",
-    display: "flex",
-    gap: "1.5rem",
-    margin: 0,
-    padding: 0,
-  },
-  link: {
-    color: "#fff",
-    textDecoration: "none",
-    fontSize: "1rem",
-  },
-};
-
 export default Navbar;

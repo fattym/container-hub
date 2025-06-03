@@ -18,30 +18,8 @@ const Detail: React.FC = () => {
   }
 
   // Example FAQs (can be moved to shared data if needed)
-  const faqs = [
-    {
-      id: 1,
-      question: "What are the exact dimensions of this container?",
-      answer: "See the specifications tab for detailed dimensions.",
-    },
-    {
-      id: 2,
-      question: "How long does delivery typically take?",
-      answer: "Delivery is usually within 5-10 business days.",
-    },
-    {
-      id: 3,
-      question: "Are the containers wind and water tight?",
-      answer: "Yes, all our containers are certified wind and water tight.",
-    },
-  ];
 
   const [activeTab, setActiveTab] = useState("specifications");
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
-
-  const toggleFaq = (id: number) => {
-    setExpandedFaq(expandedFaq === id ? null : id);
-  };
 
   return (
     <div className="min-h-screen bg-gray-50">

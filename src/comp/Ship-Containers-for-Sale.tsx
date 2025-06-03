@@ -5,7 +5,7 @@ import { ContainerType } from "./containerTypes"; // <-- import shared data
 
 const Home: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState("all");
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm] = useState("");
   const [showQuoteModal, setShowQuoteModal] = useState(false);
 
   const handleQuoteSubmit = (e: React.FormEvent) => {

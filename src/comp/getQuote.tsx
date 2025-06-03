@@ -42,7 +42,7 @@ const ShippingQuoteForm: React.FC = () => {
   };
 
   const totalSteps = 4; // Total number of steps in the form
-  const isLastStep = step === totalSteps;
+
   const nextStep = () => setStep((prev) => Math.min(prev + 1, totalSteps));
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
   const handleSubmit = () => {
