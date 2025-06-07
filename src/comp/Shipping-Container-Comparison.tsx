@@ -1,30 +1,34 @@
 // The exported code uses Tailwind CSS. Install Tailwind CSS in your dev environment to ensure all styles work.
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import Navbar2 from "./com/nvabar2";
 import { ContainerType } from "./containerTypes";
-
-
-// ...existing code...
+import { Link } from "react-router-dom";
 
 const Compare: React.FC = () => {
-  // Get location with state
+  // Selected containers for comparison
+  const [compareItems, setCompareItems] = useState<number[]>([1, 2, 3]);
 
-  const [showQuoteModal, setShowQuoteModal] = useState(false);
-  const [quoteItems, setQuoteItems] = useState<
+ const [quoteItems, setQuoteItems] = useState<
     { id: number; quantity: number }[]
   >([]);
-  const [searchTerm, setSearchTerm] = useState<string>("");
-
-  // Handle quote form submission
-  const handleQuoteSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // You can add logic here to process the quote request, e.g., send to API or show a success message
-    setShowQuoteModal(false);
-    alert("Quote request submitted!");
-  };
-
-  // Container data
-
+  // Load compareItems from navigation state if available
+  React.useEffect(() => {
+    // Check if navigation state has compareItems (from Link)
+    // Only run on mount
+    // @ts-ignore
+    const navState = window.history.state && window.history.state.usr;
+    if (navState && Array.isArray(navState.compareItems)) {
+      // If compareItems are objects with id, extract ids
+      const ids = navState.compareItems.map((item: any) =>
+        typeof item === "object" && item.id ? item.id : item
+      );
+      setCompareItems(ids);
+    }
+  }, []);
+  // Add item to comparison
+  const addItems = (id: number) => {
+    setCompareItems([...compareItems, id]);
+ };
   // Remove item from comparison
   const removeItem = (id: number) => {
     setCompareItems(compareItems.filter((itemId) => itemId !== id));
@@ -43,6 +47,8 @@ const Compare: React.FC = () => {
     }
   };
 
+
+
   // Calculate total
 
   // Format price as currency
@@ -60,219 +66,26 @@ const Compare: React.FC = () => {
   const printComparison = () => {
     window.print();
   };
-  const location = useLocation() as ReturnType<typeof useLocation> & {
-    state?: { compareItems?: number[] };
-  };
-  const initialCompareItems = (location.state &&
-    location.state.compareItems) || [1, 2, 3]; // It will use the passed state or default
-  const [compareItems, setCompareItems] =
-    useState<number[]>(initialCompareItems);
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow-md">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center">
-            <div className="text-2xl font-bold text-blue-600">
-              <i className="fas fa-ship mr-2"></i>
-              ContainerHub
-            </div>
-            <nav className="hidden md:flex ml-10">
-              <Link
-                to="/"
-                className="mx-3 text-gray-600 hover:text-blue-600 transition-colors"
-              >
-                Home
-              </Link>
-              <Link
-                to="/products"
-                className="mx-3 text-gray-600 hover:text-blue-600 transition-colors"
-              >
-                Products
-              </Link>
-              <Link
-                to="/about"
-                className="mx-3 text-gray-600 hover:text-blue-600 transition-colors"
-              >
-                About Us
-              </Link>
-              <Link
-                to="/contact"
-                className="mx-3 text-gray-600 hover:text-blue-600 transition-colors"
-              >
-                Contact
-              </Link>
-            </nav>
-          </div>
-          <div className="flex items-center">
-            <div className="relative mr-4">
-              <input
-                type="text"
-                placeholder="Search containers..."
-                className="pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-            </div>
-            <button
-              id="getQuoteBtn"
-              onClick={() => setShowQuoteModal(true)}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors !rounded-button whitespace-nowrap cursor-pointer"
-            >
-              Get Quote
-            </button>
-            {showQuoteModal && (
-              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                <div className="bg-white rounded-lg p-8 max-w-2xl w-full mx-4">
-                  <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-bold text-gray-800">
-                      Request a Quote
-                    </h2>
-                    <button
-                      id="closeQuoteModal"
-                      onClick={() => setShowQuoteModal(false)}
-                      className="text-gray-500 hover:text-gray-700 text-xl"
-                    >
-                      <i className="fas fa-times"></i>
-                    </button>
-                  </div>
-                  <form
-                    id="quoteForm"
-                    onSubmit={handleQuoteSubmit}
-                    className="space-y-4"
-                  >
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-gray-700 mb-2">
-                          Full Name
-                        </label>
-                        <input
-                          type="text"
-                          id="quoteName"
-                          required
-                          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          placeholder="Enter your full name"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-gray-700 mb-2">
-                          Email
-                        </label>
-                        <input
-                          type="email"
-                          id="quoteEmail"
-                          required
-                          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          placeholder="Enter your email"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-gray-700 mb-2">
-                          Phone
-                        </label>
-                        <input
-                          type="tel"
-                          id="quotePhone"
-                          required
-                          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          placeholder="Enter your phone number"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-gray-700 mb-2">
-                          Container Type
-                        </label>
-                        <select
-                          id="quoteContainerType"
-                          required
-                          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        >
-                          <option value="">Select container type</option>
-                          <option value="20ft-standard">20ft Standard</option>
-                          <option value="40ft-standard">40ft Standard</option>
-                          <option value="40ft-high-cube">40ft High Cube</option>
-                          <option value="refrigerated">Refrigerated</option>
-                          <option value="special">Special Purpose</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-gray-700 mb-2">
-                          Quantity
-                        </label>
-                        <input
-                          type="number"
-                          id="quoteQuantity"
-                          required
-                          min="1"
-                          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          placeholder="Enter quantity needed"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-gray-700 mb-2">
-                          Delivery Location
-                        </label>
-                        <input
-                          type="text"
-                          id="quoteLocation"
-                          required
-                          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          placeholder="Enter delivery location"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-gray-700 mb-2">
-                        Special Requirements
-                      </label>
-                      <textarea
-                        id="quoteRequirements"
-                        rows={4}
-                        className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="Enter any special requirements or notes"
-                      ></textarea>
-                    </div>
-                    <div className="flex justify-end gap-4 mt-6">
-                      <button
-                        type="button"
-                        onClick={() => setShowQuoteModal(false)}
-                        className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors !rounded-button whitespace-nowrap cursor-pointer"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="submit"
-                        className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors !rounded-button whitespace-nowrap cursor-pointer"
-                      >
-                        Submit Quote Request
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            )}
-            <button className="md:hidden ml-4 text-gray-600">
-              <i className="fas fa-bars text-xl"></i>
-            </button>
-          </div>
-        </div>
-      </header>
+      <Navbar2 quoteItem={quoteItems} setQuoteItem={setQuoteItems} />
+
       {/* Comparison Page Content */}
       <div className="container mx-auto px-4 py-8">
         {/* Comparison Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
           <div>
             <div className="flex items-center mb-2">
-              <a
-                href="https://readdy.ai/home/28cfcebc-f00c-493e-a707-42ea23f910d2/0cf3f40b-4786-42e8-bb4a-50112957bedf"
+              <Link
+                to="/products"
                 data-readdy="true"
                 className="text-blue-600 hover:text-blue-800 cursor-pointer"
               >
                 <i className="fas fa-arrow-left mr-2"></i>
                 Back to Products
-              </a>
+              </Link>
             </div>
             <h1 className="text-3xl font-bold text-gray-800">
               Compare Containers
@@ -314,33 +127,20 @@ const Compare: React.FC = () => {
                   </h3>
                   <div className="flex items-center mb-4">
                     <span
-                      className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        container.condition === "New"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-blue-100 text-blue-800"
-                      }`}
+                      className={`px-2 py-1 rounded-full text-xs font-medium ${container.condition === "New" ? "bg-green-100 text-green-800" : "bg-blue-100 text-blue-800"}`}
                     >
                       {container.condition}
                     </span>
                     <span
-                      className={`ml-2 px-2 py-1 rounded-full text-xs font-medium ${
-                        container.inStock
-                          ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"
-                      }`}
+                      className={`ml-2 px-2 py-1 rounded-full text-xs font-medium ${container.inStock ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
                     >
-                      {container.inStock ? "In Stock" : "Out of Stock"}
+                      {container.inStock ? "In Stock" : "Pre Order"}
                     </span>
                   </div>
                   <div className="text-2xl font-bold text-blue-600 mb-4">
                     {formatPrice(container.price)}
                   </div>
-                  <button
-                    onClick={() => addToQuote(container.id)}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition-colors !rounded-button whitespace-nowrap cursor-pointer"
-                  >
-                    Add to Quote
-                  </button>
+            
                 </div>
               ) : null;
             })}
@@ -431,7 +231,7 @@ const Compare: React.FC = () => {
                           : "text-red-600 font-medium"
                       }
                     >
-                      {container.inStock ? "In Stock" : "Out of Stock"}
+                      {container.inStock ? "In Stock" : "Pre Order"}
                     </span>
                   </div>
                 ) : null;
@@ -539,6 +339,7 @@ const Compare: React.FC = () => {
             </div>
           </div>
           {/* Features Section */}
+          
           <div className="border-b border-gray-200">
             <div className="bg-gray-50 px-6 py-4">
               <h2 className="text-lg font-bold text-gray-800">Features</h2>
@@ -557,15 +358,14 @@ const Compare: React.FC = () => {
             ].map((feature, index) => (
               <div
                 key={`feature-${index}`}
-                className={`grid grid-cols-4 divide-x divide-gray-200 ${
-                  index % 2 === 0 ? "" : "bg-gray-50"
-                }`}
+                className={`grid grid-cols-4 divide-x divide-gray-200 ${index % 2 === 0 ? "" : "bg-gray-50"}`}
               >
                 <div
                   className={`px-6 py-4 ${index % 2 === 0 ? "bg-gray-50" : ""}`}
                 >
                   <span className="font-medium text-gray-700">{feature}</span>
                 </div>
+
                 {compareItems.map((itemId) => {
                   const container = getContainerById(itemId);
                   return container ? (
@@ -573,7 +373,7 @@ const Compare: React.FC = () => {
                       key={`feature-${index}-${itemId}`}
                       className="px-6 py-4"
                     >
-                      {container.features1.includes(feature) ? (
+                      {container.features?.includes(feature) ? (
                         <i className="fas fa-check text-green-500"></i>
                       ) : (
                         <i className="fas fa-times text-red-500"></i>
@@ -599,30 +399,28 @@ const Compare: React.FC = () => {
             ].map((option, index) => (
               <div
                 key={`delivery-${index}`}
-                className={`grid grid-cols-4 divide-x divide-gray-200 ${
-                  index % 2 === 0 ? "" : "bg-gray-50"
-                }`}
+                className={`grid grid-cols-4 divide-x divide-gray-200 ${index % 2 === 0 ? "" : "bg-gray-50"}`}
               >
                 <div
                   className={`px-6 py-4 ${index % 2 === 0 ? "bg-gray-50" : ""}`}
                 >
                   <span className="font-medium text-gray-700">{option}</span>
                 </div>
-                {compareItems.map((itemId) => {
+                {/* {compareItems.map((itemId) => {
                   const container = getContainerById(itemId);
                   return container ? (
                     <div
                       key={`delivery-${index}-${itemId}`}
                       className="px-6 py-4"
                     >
-                      {container.doorType.includes(option) ? (
+                      {container.deliveryOptions1.includes(option) ? (
                         <i className="fas fa-check text-green-500"></i>
                       ) : (
                         <i className="fas fa-times text-red-500"></i>
                       )}
                     </div>
                   ) : null;
-                })}
+                })} */}
               </div>
             ))}
           </div>
@@ -645,10 +443,14 @@ const Compare: React.FC = () => {
               <i className="fas fa-print mr-2"></i>
               Print Comparison
             </button>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg shadow-sm transition-colors flex items-center !rounded-button whitespace-nowrap cursor-pointer">
-              <i className="fas fa-clipboard-list mr-2"></i>
+            <Link
+              to="/products"
+              data-readdy="true"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg transition-colors !rounded-button whitespace-nowrap cursor-pointer flex items-center"
+            >
+              <i className="fas fa-shopping-cart mr-2"></i>
               Get Quote for Selected
-            </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -751,9 +553,7 @@ const Compare: React.FC = () => {
                 </li>
                 <li className="flex items-center">
                   <i className="fas fa-envelope mr-3 text-gray-400"></i>
-                  <span className="text-gray-400">
-                    joseph.mundia@pitchforwardgroup.com
-                  </span>
+                  <span className="text-gray-400">info@containerhub.com</span>
                 </li>
                 <li className="flex items-center">
                   <i className="fas fa-clock mr-3 text-gray-400"></i>

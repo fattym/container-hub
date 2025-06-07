@@ -24,10 +24,13 @@ const Navbar2: React.FC<QuoteProps> = ({quoteItem}) => {
     <header className="bg-white shadow-md">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center">
-          <div className="text-2xl font-bold text-blue-600">
+            {/* Logo for mobile and desktop */}
+            <div className="text-2xl font-bold text-blue-600 flex items-center md:mr-4 mr-2">
             <i className="fas fa-ship mr-2"></i>
-            ContainerHub
-          </div>
+            <span className="hidden sm:inline">ContainerHub</span>
+            <span className="sm:hidden">PitchCHub</span>
+            </div>
+         
           {/* Desktop Navigation */}
           <nav className="hidden md:flex ml-10">
             <Link
@@ -60,6 +63,16 @@ const Navbar2: React.FC<QuoteProps> = ({quoteItem}) => {
         </div>
         {/* Responsive Spacer */}
         <div className="flex-1" />
+        <style>
+          {`
+            @media (max-width: 767px) {
+              .view-quote-btn-mobile {
+          padding: 0.5rem 0.75rem;
+          font-size: 0.875rem;
+              }
+            }
+          `}
+        </style>
         <div className="flex items-center">
           <Link
             to={(() => {

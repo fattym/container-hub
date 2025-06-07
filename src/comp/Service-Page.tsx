@@ -486,7 +486,9 @@ const ServicePage: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
                     ))}
                   </ul>
                   <button
-                    className={`w-full py-3 rounded-lg font-medium transition-colors !rounded-button whitespace-nowrap cursor-pointer ${tier.recommended ? "bg-blue-600 hover:bg-blue-700 text-white" : "bg-gray-100 hover:bg-gray-200 text-gray-800"}`}
+                  onClick={() => window.location.href = "/getQuote"}
+                    
+                  className={`w-full py-3 rounded-lg font-medium transition-colors !rounded-button whitespace-nowrap cursor-pointer ${tier.recommended ? "bg-blue-600 hover:bg-blue-700 text-white" : "bg-gray-100 hover:bg-gray-200 text-gray-800"}`}
                   >
                     Get Quote
                   </button>
@@ -780,34 +782,7 @@ const ServicePage: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
                     </label>
                   </div>
                 </div>
-                <div className="mb-8">
-                  <label
-                    htmlFor="file"
-                    className="block text-gray-700 font-medium mb-2"
-                  >
-                    Upload Files (Optional)
-                  </label>
-                  <div className="border border-dashed border-gray-300 rounded-lg p-4">
-                    <input
-                      type="file"
-                      id="file"
-                      name="file"
-                      className="hidden"
-                    />
-                    <label
-                      htmlFor="file"
-                      className="flex flex-col items-center justify-center cursor-pointer"
-                    >
-                      <i className="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
-                      <span className="text-gray-600">
-                        Click to upload or drag and drop
-                      </span>
-                      <span className="text-sm text-gray-500 mt-1">
-                        PDF, JPG, PNG (Max 10MB)
-                      </span>
-                    </label>
-                  </div>
-                </div>
+               
                 <div className="flex justify-center">
                   <button
                     type="submit"
@@ -838,7 +813,8 @@ const ServicePage: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
                 href="tel:+18005551234"
                 className="text-2xl font-bold text-white hover:text-blue-200 transition-colors cursor-pointer"
               >
-                +1 (800) 555-1234
+                
+(+254) 707 586837
               </a>
             </div>
             <div className="bg-white/10 rounded-lg p-6 backdrop-blur-sm">
@@ -851,7 +827,7 @@ const ServicePage: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
                 href="mailto:services@containerhub.com"
                 className="text-xl font-bold text-white hover:text-blue-200 transition-colors cursor-pointer"
               >
-                services@containerhub.com
+                contact@pitchforwardgroup.com
               </a>
             </div>
             <div className="bg-white/10 rounded-lg p-6 backdrop-blur-sm">

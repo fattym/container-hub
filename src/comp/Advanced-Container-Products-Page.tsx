@@ -773,27 +773,20 @@ const Product: React.FC<QuoteProps> = ({quoteItem,setQuoteItem}) => {
                 >
                   Clear All
                 </button>
+             
+                {/* Compare Selected Button */}
                 <Link
                   to={{
                     pathname: "/compare",
                   }}
                   state={{
-                    compareItems: compareItems.map((id) =>
-                      getContainerById(id)
-                    ),
+                    compareItems: compareItems.map((id) => getContainerById(id)),
                   }}
-                  className="bg-gray-100 hover:bg-gray-200 text-blue-600 px-4 py-2 rounded-lg transition-colors !rounded-button whitespace-nowrap cursor-pointer inline-block"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors !rounded-button whitespace-nowrap cursor-pointer inline-block"
                 >
-                  Go to Compare Page
+                  Compare Items
                 </Link>
-                {compareItems.length > 0 && (
-                  <button
-                    onClick={handleCompareClick}
-                    disabled={selectedItems.length === 0}
-                  >
-                    Compare Selected ({selectedItems.length})
-                  </button>
-                )}
+           
               </div>
             </div>
           </div>
