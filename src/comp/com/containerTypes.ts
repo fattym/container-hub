@@ -26,7 +26,8 @@ export const ContainerType = [
     paint: "Marine-grade anti-corrosive epoxy paint",
     features1: "Weatherproof and secure",
     features2: "Easy to transport and stack",
-    additionalImages: "h",
+    additionalImages:
+      "https://readdy.ai/api/search-image?query=A%20professional%20photograph%20of%20a%2020ft%20standard%20shipping%20container%20in%20pristine%20condition%2C%20blue%20color%2C%20placed%20on%20a%20clean%20concrete%20surface%20with%20a%20minimalist%20industrial%20background%2C%20soft%20natural%20lighting&width=400&height=300&seq=001&orientation=landscape",
     inStock: true,
     condition: "New",
     size: "20ft",
@@ -63,7 +64,8 @@ export const ContainerType = [
     features5: "Easy access with double doors",
     features6: "Versatile for various cargo types",
     features7: "Durable construction for long-term use",
-    additionalImages: "h",
+    additionalImages:
+      "https://readdy.ai/api/search-image?query=A%20professional%20photograph%20of%20a%2040ft%20high%20cube%20shipping%20container%20in%20pristine%20condition%2C%20blue%20color%2C%20placed%20on%20a%20clean%20concrete%20surface%20with%20a%20minimalist%20industrial%20background%2C%20soft%20natural%20lighting&width=400&height=300&seq=002&orientation=landscape",
     inStock: "Pre order",
     condition: "New",
     size: "40ft High Cube",
@@ -99,7 +101,8 @@ export const ContainerType = [
     features4: "Easy access with double doors",
     features5: "Durable construction for long-term use",
     features6: "Versatile for various temperature-sensitive cargo",
-    additionalImages: "h",
+    additionalImages:
+      "https://readdy.ai/api/search-image?query=A%20professional%20photograph%20of%20a%20refrigerated%20shipping%20container%20with%20external%20cooling%20unit%20visible%2C%20white%20color%2C%20placed%20on%20a%20clean%20concrete%20surface%20with%20a%20minimalist%20industrial%20background%2C%20soft%20natural%20lighting&width=400&height=300&seq=003&orientation=landscape",
     inStock: "Pre order",
     condition: "New",
     size: "40ft Refrigerated",
@@ -133,7 +136,8 @@ export const ContainerType = [
     features2: "Covered with tarpaulin for weather protection",
     features3: "Ideal for machinery, pipes, and other oversized items",
     features4: "Easy access with double doors",
-    additionalImages: "h",
+    additionalImages:
+      "https://readdy.ai/api/search-image?query=A%20professional%20photograph%20of%20an%20open%20top%20shipping%20container%20with%20the%20roof%20removed%2C%20green%20color%2C%20placed%20on%20a%20clean%20concrete%20surface%20with%20a%20minimalist%20industrial%20background%2C%20soft%20natural%20lighting&width=400&height=300&seq=004&orientation=landscape",
     preOrder: true,
     features5: "Durable construction for long-term use",
     condition: "New",
@@ -170,7 +174,8 @@ export const ContainerType = [
     features5: "Versatile for various cargo types",
     features6: "Easy access with open top design",
     features7: "Secure locking system for safe transport",
-    additionalImages: "h",
+    additionalImages:
+      "https://readdy.ai/api/search-image?query=A%20professional%20photograph%20of%20a%20flat%20rack%20shipping%20container%20with%20collapsible%20sides%2C%20yellow%20color%2C%20placed%20on%20a%20clean%20concrete%20surface%20with%20a%20minimalist%20industrial%20background%2C%20soft%20natural%20lighting&width=400&height=300&seq=005&orientation=landscape",
     preOrder: true,
     features8: "Ideal for heavy or oversized cargo",
     features9: "Stackable for efficient transport",
@@ -206,7 +211,8 @@ export const ContainerType = [
     features3: "Insulated options available for temperature-sensitive liquids",
     features4: "Easy access with top manhole cover",
     features5: "Durable stainless steel construction for long-term use",
-    additionalImages: "h",
+    additionalImages:
+      "https://readdy.ai/api/search-image?query=A%20professional%20photograph%20of%20a%20tank%20shipping%20container%20designed%20for%20liquid%20transport%2C%20stainless%20steel%20finish%2C%20placed%20on%20a%20clean%20concrete%20surface%20with%20a%20minimalist%20industrial%20background%2C%20soft%20natural%20lighting&width=400&height=300&seq=006&orientation=landscape",
     preOrder: true,
     condition: "New",
     size: "20ft Tank",
@@ -239,7 +245,8 @@ export const ContainerType = [
     features1: "Convenient side access for easy loading and unloading",
     features2: "Weatherproof and secure design",
     features3: "Easy to transport and stack",
-    additionalImages: "h",
+    additionalImages:
+      "https://readdy.ai/api/search-image?query=A%20professional%20photograph%20of%20a%2020ft%20side%20door%20shipping%20container%2C%20blue%20color%2C%20placed%20on%20a%20clean%20concrete%20surface%20with%20a%20minimalist%20industrial%20background&width=400&height=300&seq=007&orientation=landscape",
     preOrder: true,
     condition: "New",
     size: "20ft Side Door",
@@ -275,7 +282,8 @@ export const ContainerType = [
     features3: "Insulated walls for optimal temperature retention",
     features4: "Easy access with double doors",
     features5: "Durable construction for long-term use",
-    additionalImages: "h",
+    additionalImages:
+      "https://readdy.ai/api/search-image?query=A%20professional%20photograph%20of%20a%2020ft%20refrigerated%20shipping%20container%2C%20white%20color%2C%20placed%20on%20a%20clean%20concrete%20surface%20with%20a%20minimalist%20industrial%20background&width=400&height=300&seq=008&orientation=landscape",
     preOrder: true,
     deliveryOptions: ["Standard Delivery", "Express Delivery", "Pickup"],
   },
@@ -310,7 +318,8 @@ export const ContainerType = [
     features5: "Easy access with double doors",
     features6: "Versatile for various cargo types",
     features7: "Durable construction for long-term use",
-    additionalImages: "h",
+    additionalImages:
+      "https://readdy.ai/api/search-image?query=A%20professional%20photograph%20of%20a%2045ft%20high%20cube%20shipping%20container%2C%20blue%20color%2C%20placed%20on%20a%20clean%20concrete%20surface%20with%20a%20minimalist%20industrial%20background&width=400&height=300&seq=009&orientation=landscape",
     preOrder: true,
     deliveryOptions: ["Standard Delivery", "Express Delivery", "Pickup"],
   },

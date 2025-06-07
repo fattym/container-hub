@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ContainerType } from "./containerTypes"; // Import your shared container data
+import Navbar2 from "./com/nvabar2";
 
-const Detail: React.FC = () => {
+type QuoteProps = {
+  quoteItem: { id: number, quantity: number }[];
+  setQuoteItem: React.Dispatch<React.SetStateAction<{ id: number, quantity: number }[]>>;
+};
+
+const Detail: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
   const { id } = useParams<{ id: string }>();
   const container = ContainerType.find((c) => c.id === Number(id));
 
@@ -24,33 +30,7 @@ const Detail: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow-md">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center">
-            <Link
-              to="/"
-              aria-label="Back to Home"
-              className="mr-4 text-gray-600 hover:text-blue-600 transition-colors cursor-pointer"
-            >
-              <i className="fas fa-arrow-left mr-2"></i>
-              Back to Home
-            </Link>
-            <Link
-              to="/quote-summary"
-              aria-label="Back to Quote Summary"
-              className="mr-4 text-gray-600 hover:text-blue-600 transition-colors cursor-pointer"
-            >
-              <i className="fas fa-arrow-left mr-2"></i>
-              Back to Quote Summary
-            </Link>
-            <div className="text-2xl font-bold text-blue-600">
-              <i className="fas fa-ship mr-2"></i>
-              ContainerHub
-            </div>
-          </div>
-        </div>
-      </header>
-
+      <Navbar2 quoteItem={quoteItem} setQuoteItem={setQuoteItem} />
       {/* Breadcrumb */}
       <div className="bg-gray-100 py-3">
         <div className="container mx-auto px-4">

@@ -2,8 +2,15 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ContainerType } from "./containerTypes";
+import Navbar2 from "./com/nvabar2";
+import Footer from "./com/footer";
 
-const Product: React.FC = () => {
+type QuoteProps = {
+  quoteItem: { id: number, quantity: number }[];
+  setQuoteItem: React.Dispatch<React.SetStateAction<{ id: number, quantity: number }[]>>;
+};
+
+const Product: React.FC<QuoteProps> = ({quoteItem,setQuoteItem}) => {
   // Price range state
   const [priceRange] = useState<[number, number]>([1000, 10000]);
   // Filter states
@@ -28,6 +35,11 @@ const Product: React.FC = () => {
   // Quote state
   const [quoteItems, setQuoteItems] = useState<number[]>([]);
   const [showToast, setShowToast] = useState<boolean>(false);
+
+  // Set quote items to local storage
+  useEffect(() => {
+    localStorage.setItem("addToQuote", JSON.stringify(quoteItem));
+  }, [quoteItem]);
 
   // Update compare bar visibility when items are added/removed
   useEffect(() => {
@@ -160,103 +172,18 @@ const Product: React.FC = () => {
   };
 
   const handleAddToQuote = (productId: number, quantity: number = 1) => {
+    setQuoteItem((prev) => [...prev, { id: productId, quantity: quantity }]);
     // Write the item details to localStorage.
     // The QuoteSummary page is listening for this 'addToQuote' key.
-    localStorage.setItem(
-      "addToQuote",
-      JSON.stringify({ id: productId, quantity: quantity })
-    );
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow-md">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center">
-            <div className="text-2xl font-bold text-blue-600">
-              <i className="fas fa-ship mr-2"></i>
-              ContainerHub
-            </div>
-            <nav className="hidden md:flex ml-10">
-              <Link
-                to={"/"}
-                data-readdy="true"
-                className="mx-3 text-gray-600 hover:text-blue-600 transition-colors cursor-pointer"
-              >
-                Home
-              </Link>
-              <Link
-                to={"/products"}
-                className="mx-3 text-blue-600 font-medium transition-colors cursor-pointer"
-              >
-                Products
-              </Link>
-              <Link
-                to={"/services"}
-                className="mx-3 text-gray-600 hover:text-blue-600 transition-colors cursor-pointer"
-              >
-                Services
-              </Link>
-              <Link
-                to={"/about"}
-                className="mx-3 text-gray-600 hover:text-blue-600 transition-colors cursor-pointer"
-              >
-                About Us
-              </Link>
-              <Link
-                to={"/contact"}
-                className="mx-3 text-gray-600 hover:text-blue-600 transition-colors cursor-pointer"
-              >
-                Contact
-              </Link>
-            </nav>
-          </div>
-          <div className="flex items-center">
-            <div className="relative mr-4">
-              <input
-                type="text"
-                placeholder="Search containers..."
-                className="pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-            </div>
-            <Link
-              to={(() => {
-                const container = getContainerById(quoteItems[0]);
-                return container !== undefined
-                  ? `${ContainerType.indexOf(container)}`
-                  : "/quote-summary";
-              })()}
-              onClick={() => setShowMobileFilters(false)}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors mr-3 !rounded-button whitespace-nowrap cursor-pointer relative inline-block"
-              data-readdy="true"
-              data-readdy-id="view-quote-btn"
-            >
-              {quoteItems.length > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  {quoteItems.length}
-                </span>
-              )}
-              <i className="fas fa-clipboard-list mr-1"></i>
-              View Quote
-              {quoteItems.length > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  {quoteItems.length}
-                </span>
-              )}
-            </Link>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors !rounded-button whitespace-nowrap cursor-pointer">
-              Get Quote
-            </button>
-            <button className="md:hidden ml-4 text-gray-600 cursor-pointer">
-              <i className="fas fa-bars text-xl"></i>
-            </button>
-          </div>
-        </div>
-      </header>
+
+      <Navbar2 quoteItem={quoteItem} setQuoteItem={setQuoteItem} />
+      {/* Toast Notification */}
+      {/* Toast Notification */}
 
       {/* Page Title */}
       <div className="bg-blue-600 text-white py-8">
@@ -755,7 +682,6 @@ const Product: React.FC = () => {
                       </div>
                       <button
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition-colors !rounded-button whitespace-nowrap cursor-pointer"
-                        disabled={!container.inStock}
                         onClick={() => handleAddToQuote(container.id)}
                       >
                         Add to Quote
@@ -916,7 +842,7 @@ const Product: React.FC = () => {
                       >
                         {getContainerById(quickViewItem)?.inStock
                           ? "In Stock"
-                          : "Out of Stock"}
+                          : "Pre order"}
                       </div>
                       <h3 className="text-2xl font-bold text-gray-800">
                         {getContainerById(quickViewItem)?.price}
@@ -1028,177 +954,7 @@ const Product: React.FC = () => {
         </div>
       )}
       {/* Footer */}
-      <footer className="bg-gray-800 text-white pt-12 pb-6 mt-16">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4">ContainerHub</h3>
-              <p className="text-gray-400 mb-4">
-                The leading provider of high-quality shipping containers for
-                businesses and individuals nationwide.
-              </p>
-              <div className="flex space-x-4">
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors cursor-pointer"
-                >
-                  <i className="fab fa-facebook-f"></i>
-                </a>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors cursor-pointer"
-                >
-                  <i className="fab fa-twitter"></i>
-                </a>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors cursor-pointer"
-                >
-                  <i className="fab fa-instagram"></i>
-                </a>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors cursor-pointer"
-                >
-                  <i className="fab fa-linkedin-in"></i>
-                </a>
-              </div>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold mb-4">Quick Links</h3>
-              <ul className="space-y-2">
-                <li>
-                  <Link
-                    to="/"
-                    className="text-gray-400 hover:text-white transition-colors cursor-pointer"
-                  >
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-gray-400 hover:text-white transition-colors cursor-pointer"
-                  >
-                    Products
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-gray-400 hover:text-white transition-colors cursor-pointer"
-                  >
-                    Services
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-gray-400 hover:text-white transition-colors cursor-pointer"
-                  >
-                    About Us
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-gray-400 hover:text-white transition-colors cursor-pointer"
-                  >
-                    Contact
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold mb-4">Contact Us</h3>
-              <ul className="space-y-2">
-                <li className="flex items-start">
-                  <i className="fas fa-map-marker-alt mt-1 mr-3 text-gray-400"></i>
-                  <span className="text-gray-400">
-                    123 Container Way, Shipping City, SC 12345
-                  </span>
-                </li>
-                <li className="flex items-center">
-                  <i className="fas fa-phone-alt mr-3 text-gray-400"></i>
-                  <span className="text-gray-400">+1 (800) 555-1234</span>
-                </li>
-                <li className="flex items-center">
-                  <i className="fas fa-envelope mr-3 text-gray-400"></i>
-                  <span className="text-gray-400">
-                    joseph.mundia@pitchforwardgroup.com
-                  </span>
-                </li>
-                <li className="flex items-center">
-                  <i className="fas fa-clock mr-3 text-gray-400"></i>
-                  <span className="text-gray-400">Mon-Fri: 8am - 6pm</span>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold mb-4">Newsletter</h3>
-              <p className="text-gray-400 mb-4">
-                Subscribe to our newsletter for the latest updates and special
-                offers.
-              </p>
-              <div className="flex">
-                <input
-                  type="email"
-                  placeholder="Your Email"
-                  className="px-4 py-2 rounded-l-lg border-none focus:outline-none text-gray-800 w-full"
-                />
-                <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r-lg transition-colors !rounded-button whitespace-nowrap cursor-pointer">
-                  <i className="fas fa-paper-plane"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="pt-6 border-t border-gray-700 text-gray-400 text-sm">
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <div className="mb-4 md:mb-0">
-                <p>&copy; 2025 ContainerHub. All rights reserved.</p>
-              </div>
-              <div className="flex flex-wrap justify-center gap-4">
-                <div className="flex items-center">
-                  <i className="fab fa-cc-visa text-2xl mr-2"></i>
-                  <span>Visa</span>
-                </div>
-                <div className="flex items-center">
-                  <i className="fab fa-cc-mastercard text-2xl mr-2"></i>
-                  <span>Mastercard</span>
-                </div>
-                <div className="flex items-center">
-                  <i className="fab fa-cc-paypal text-2xl mr-2"></i>
-                  <span>PayPal</span>
-                </div>
-                <div className="flex items-center">
-                  <i className="fab fa-cc-amex text-2xl mr-2"></i>
-                  <span>Amex</span>
-                </div>
-              </div>
-            </div>
-            <div className="mt-4 text-center">
-              <a
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors mr-4 cursor-pointer"
-              >
-                Terms & Conditions
-              </a>
-              <a
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors mr-4 cursor-pointer"
-              >
-                Privacy Policy
-              </a>
-              <a
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors cursor-pointer"
-              >
-                Shipping Policy
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

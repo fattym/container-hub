@@ -2,7 +2,8 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ContainerType } from "./containerTypes";
-
+import Footer from "./com/footer";
+import Navbar2 from "./com/nvabar2";
 // ...existing code...
 
 const Compare: React.FC = () => {

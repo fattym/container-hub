@@ -2,11 +2,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ContainerType } from "./containerTypes"; // <-- import shared data
-
+import Navbar2 from "./com/nvabar2";
+import Footer from "./com/footer"; // <-- import shared footer component
 const Home: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState("all");
   const [searchTerm] = useState("");
-  const [showQuoteModal, setShowQuoteModal] = useState(false);
+  const [setShowQuoteModal] = useState(false);
+  
 
   const handleQuoteSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +27,7 @@ const Home: React.FC = () => {
       successMessage.remove();
     }, 3000);
     // Close modal
-    setShowQuoteModal(false);
+   
   };
 
   const filterContainers = (type: string) => {
@@ -49,188 +51,16 @@ const Home: React.FC = () => {
               .toLowerCase()
               .includes(searchTerm.toLowerCase())
         );
+        
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow-md">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center">
-            <div className="text-2xl font-bold text-blue-600">
-              <i className="fas fa-ship mr-2"></i>
-              ContainerHub
-            </div>
-            <nav className="hidden md:flex ml-10">
-              <Link
-                to="/"
-                className="mx-3 text-gray-600 hover:text-blue-600 transition-colors"
-              >
-                Home
-              </Link>
-              <Link
-                to="/products"
-                className="mx-3 text-gray-600 hover:text-blue-600 transition-colors"
-              >
-                Products
-              </Link>
-              <Link
-                to="/about"
-                className="mx-3 text-gray-600 hover:text-blue-600 transition-colors"
-              >
-                About Us
-              </Link>
-              <Link
-                to="/contact"
-                className="mx-3 text-gray-600 hover:text-blue-600 transition-colors"
-              >
-                Contact
-              </Link>
-            </nav>
-          </div>
-          <div className="flex items-center">
-            <button
-              id="getQuoteBtn"
-              onClick={() => setShowQuoteModal(true)}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors !rounded-button whitespace-nowrap cursor-pointer"
-            >
-              Get Quote
-            </button>
-            {showQuoteModal && (
-              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                <div className="bg-white rounded-lg p-8 max-w-2xl w-full mx-4">
-                  <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-bold text-gray-800">
-                      Request a Quote
-                    </h2>
-                    <button
-                      id="closeQuoteModal"
-                      onClick={() => setShowQuoteModal(false)}
-                      className="text-gray-500 hover:text-gray-700 text-xl"
-                    >
-                      <i className="fas fa-times"></i>
-                    </button>
-                  </div>
-                  <form
-                    id="quoteForm"
-                    onSubmit={handleQuoteSubmit}
-                    className="space-y-4"
-                  >
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-gray-700 mb-2">
-                          Full Name
-                        </label>
-                        <input
-                          type="text"
-                          id="quoteName"
-                          required
-                          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          placeholder="Enter your full name"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-gray-700 mb-2">
-                          Email
-                        </label>
-                        <input
-                          type="email"
-                          id="quoteEmail"
-                          required
-                          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          placeholder="Enter your email"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-gray-700 mb-2">
-                          Phone
-                        </label>
-                        <input
-                          type="tel"
-                          id="quotePhone"
-                          required
-                          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          placeholder="Enter your phone number"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-gray-700 mb-2">
-                          Container Type
-                        </label>
-                        <select
-                          id="quoteContainerType"
-                          required
-                          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        >
-                          <option value="">Select container type</option>
-                          <option value="20ft-standard">20ft Standard</option>
-                          <option value="40ft-standard">40ft Standard</option>
-                          <option value="40ft-high-cube">40ft High Cube</option>
-                          <option value="refrigerated">Refrigerated</option>
-                          <option value="special">Special Purpose</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-gray-700 mb-2">
-                          Quantity
-                        </label>
-                        <input
-                          type="number"
-                          id="quoteQuantity"
-                          required
-                          min="1"
-                          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          placeholder="Enter quantity needed"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-gray-700 mb-2">
-                          Delivery Location
-                        </label>
-                        <input
-                          type="text"
-                          id="quoteLocation"
-                          required
-                          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          placeholder="Enter delivery location"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-gray-700 mb-2">
-                        Special Requirements
-                      </label>
-                      <textarea
-                        id="quoteRequirements"
-                        rows={4}
-                        className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="Enter any special requirements or notes"
-                      ></textarea>
-                    </div>
-                    <div className="flex justify-end gap-4 mt-6">
-                      <button
-                        type="button"
-                        onClick={() => setShowQuoteModal(false)}
-                        className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors !rounded-button whitespace-nowrap cursor-pointer"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="submit"
-                        className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors !rounded-button whitespace-nowrap cursor-pointer"
-                      >
-                        Submit Quote Request
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            )}
-            <button className="md:hidden ml-4 text-gray-600">
-              <i className="fas fa-bars text-xl"></i>
-            </button>
-          </div>
-        </div>
-      </header>
+      <Navbar2
+        quoteItem={[]}
+        setQuoteItem={() => {}}
+      /> 
+        {/* Toast Notification */}
       {/* Hero Section */}
       <section className="relative">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900 to-transparent z-10"></div>
@@ -507,7 +337,7 @@ const Home: React.FC = () => {
               <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex items-center">
                   <i className="fas fa-phone-alt mr-3 text-xl"></i>
-                  <span className="text-lg font-medium">+1 (800) 555-1234</span>
+                  <span className="text-lg font-medium">(+254) 707 586837</span>
                 </div>
                 <div className="flex items-center">
                   <i className="fas fa-envelope mr-3 text-xl"></i>
@@ -571,177 +401,8 @@ const Home: React.FC = () => {
         </div>
       </section>
       {/* Footer */}
-      <footer className="bg-gray-800 text-white pt-12 pb-6">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4">ContainerHub</h3>
-              <p className="text-gray-400 mb-4">
-                The leading provider of high-quality shipping containers for
-                businesses and individuals nationwide.
-              </p>
-              <div className="flex space-x-4">
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors cursor-pointer"
-                >
-                  <i className="fab fa-facebook-f"></i>
-                </a>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors cursor-pointer"
-                >
-                  <i className="fab fa-twitter"></i>
-                </a>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors cursor-pointer"
-                >
-                  <i className="fab fa-instagram"></i>
-                </a>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors cursor-pointer"
-                >
-                  <i className="fab fa-linkedin-in"></i>
-                </a>
-              </div>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold mb-4">Quick Links</h3>
-              <ul className="space-y-2">
-                <li>
-                  <a
-                    href="#"
-                    className="text-gray-400 hover:text-white transition-colors cursor-pointer"
-                  >
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-gray-400 hover:text-white transition-colors cursor-pointer"
-                  >
-                    Products
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-gray-400 hover:text-white transition-colors cursor-pointer"
-                  >
-                    Services
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-gray-400 hover:text-white transition-colors cursor-pointer"
-                  >
-                    About Us
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-gray-400 hover:text-white transition-colors cursor-pointer"
-                  >
-                    Contact
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold mb-4">Contact Us</h3>
-              <ul className="space-y-2">
-                <li className="flex items-start">
-                  <i className="fas fa-map-marker-alt mt-1 mr-3 text-gray-400"></i>
-                  <span className="text-gray-400">
-                    The Piano, Brookside drive, Westlands, Nairobi, Kenya.
-                  </span>
-                </li>
-                <li className="flex items-center">
-                  <i className="fas fa-phone-alt mr-3 text-gray-400"></i>
-                  <span className="text-gray-400">+1 (800) 555-1234</span>
-                </li>
-                <li className="flex items-center">
-                  <i className="fas fa-envelope mr-3 text-gray-400"></i>
-                  <span className="text-gray-400">
-                    contact@pitchforwardgroup.com{" "}
-                  </span>
-                </li>
-                <li className="flex items-center">
-                  <i className="fas fa-clock mr-3 text-gray-400"></i>
-                  <span className="text-gray-400">Mon-Fri: 8am - 6pm</span>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold mb-4">Newsletter</h3>
-              <p className="text-gray-400 mb-4">
-                Subscribe to our newsletter for the latest updates and special
-                offers.
-              </p>
-              <div className="flex">
-                <input
-                  type="email"
-                  placeholder="Your Email"
-                  className="px-4 py-2 rounded-l-lg border-none focus:outline-none text-gray-800 w-full"
-                />
-                <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r-lg transition-colors !rounded-button whitespace-nowrap cursor-pointer">
-                  <i className="fas fa-paper-plane"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="pt-6 border-t border-gray-700 text-gray-400 text-sm">
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <div className="mb-4 md:mb-0">
-                <p>&copy; 2025 ContainerHub. All rights reserved.</p>
-              </div>
-              <div className="flex flex-wrap justify-center gap-4">
-                <div className="flex items-center">
-                  <i className="fab fa-cc-visa text-2xl mr-2"></i>
-                  <span>Visa</span>
-                </div>
-                <div className="flex items-center">
-                  <i className="fab fa-cc-mastercard text-2xl mr-2"></i>
-                  <span>Mastercard</span>
-                </div>
-                <div className="flex items-center">
-                  <i className="fab fa-cc-paypal text-2xl mr-2"></i>
-                  <span>PayPal</span>
-                </div>
-                <div className="flex items-center">
-                  <i className="fab fa-cc-amex text-2xl mr-2"></i>
-                  <span>Amex</span>
-                </div>
-              </div>
-            </div>
-            <div className="mt-4 text-center">
-              <a
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors mr-4 cursor-pointer"
-              >
-                Terms & Conditions
-              </a>
-              <a
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors mr-4 cursor-pointer"
-              >
-                Privacy Policy
-              </a>
-              <a
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors cursor-pointer"
-              >
-                Shipping Policy
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
+
+      <Footer />
     </div>
   );
 };
