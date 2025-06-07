@@ -7,28 +7,28 @@ import Footer from "./com/footer"; // <-- import shared footer component
 const Home: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState("all");
   const [searchTerm] = useState("");
-  const [setShowQuoteModal] = useState(false);
+  // const [setShowQuoteModal] = useState(false);
   
 
-  const handleQuoteSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
-    const data = Object.fromEntries(formData);
-    // Here you would typically send the data to your backend
-    console.log("Quote Request Data:", data);
-    // Show success message
-    const successMessage = document.createElement("div");
-    successMessage.className =
-      "fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50";
-    successMessage.textContent = "Quote request submitted successfully!";
-    document.body.appendChild(successMessage);
-    // Remove success message after 3 seconds
-    setTimeout(() => {
-      successMessage.remove();
-    }, 3000);
-    // Close modal
+  // const handleQuoteSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   const formData = new FormData(e.target as HTMLFormElement);
+  //   const data = Object.fromEntries(formData);
+  //   // Here you would typically send the data to your backend
+  //   console.log("Quote Request Data:", data);
+  //   // Show success message
+  //   const successMessage = document.createElement("div");
+  //   successMessage.className =
+  //     "fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50";
+  //   successMessage.textContent = "Quote request submitted successfully!";
+  //   document.body.appendChild(successMessage);
+  //   // Remove success message after 3 seconds
+  //   setTimeout(() => {
+  //     successMessage.remove();
+  //   }, 3000);
+  //   // Close modal
    
-  };
+  // };
 
   const filterContainers = (type: string) => {
     setActiveFilter(type);

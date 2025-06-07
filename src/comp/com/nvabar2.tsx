@@ -7,7 +7,7 @@ type QuoteProps = {
   setQuoteItem: React.Dispatch<React.SetStateAction<{ id: number, quantity: number }[]>>;
 };
 
-const Navbar2: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
+const Navbar2: React.FC<QuoteProps> = ({quoteItem}) => {
   const [quoteItems] = useState<number[]>([]);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 

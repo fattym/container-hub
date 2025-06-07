@@ -1,7 +1,7 @@
 // The exported code uses Tailwind CSS. Install Tailwind CSS in your dev environment to ensure all styles work.
 import React, { useState } from "react";
 import Navbar2 from "./com/nvabar2";
-import { Link } from "react-router-dom";
+
 import Footer from "./com/footer";
 
 
