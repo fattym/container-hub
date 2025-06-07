@@ -26,26 +26,13 @@ const Compare: React.FC = () => {
     }
   }, []);
   // Add item to comparison
-  const addItems = (id: number) => {
-    setCompareItems([...compareItems, id]);
- };
+
   // Remove item from comparison
   const removeItem = (id: number) => {
     setCompareItems(compareItems.filter((itemId) => itemId !== id));
   };
   // Add to quote
-  const addToQuote = (id: number) => {
-    const existingItem = quoteItems.find((item) => item.id === id);
-    if (existingItem) {
-      setQuoteItems(
-        quoteItems.map((item) =>
-          item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-        )
-      );
-    } else {
-      setQuoteItems([...quoteItems, { id, quantity: 1 }]);
-    }
-  };
+  
 
 
 
