@@ -137,6 +137,7 @@ export const ContainerType = [
       "CSC plated",
       "Lockable doors",
       "Extra Height",
+      "Backup generator connection"
     ],
   },
   {
@@ -173,17 +174,17 @@ export const ContainerType = [
     condition: "New",
     size: "20ft Open Top",
     deliveryOptions: ["Standard Delivery", "Express Delivery", "Pickup"],
-    Features: [
+    features: [
       "Wind and water tight",
       "Cargo worthy",
       "CSC plated",
       "Lockable doors",
-      "Backup generator connection",
       "Easy to load and unload",
       "Durable construction for long-term use",
       "Versatile for various cargo types",
       "Easy access with double doors",
       "Secure locking system for safe transport",
+      "Backup generator connection",
     ],
   },
   {
