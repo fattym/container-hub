@@ -372,7 +372,7 @@ const QuoteSummary: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
                           onClick={() =>
                             setQuoteItem((prev) => [
                               ...prev,
-                              { id: container.id, quantity: 9 },
+                              { id: container.id, quantity: 1 },
                             ])
                           }
                           className="flex items-center bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-700 px-3 py-2 rounded-lg transition-colors text-sm"
