@@ -1,17 +1,20 @@
 // The exported code uses Tailwind CSS. Install Tailwind CSS in your dev environment to ensure all styles work.
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ContainerType } from "./containerTypes";
 import Navbar2 from "./com/nvabar2";
 import Footer from "./com/footer";
+import { Ban } from "lucide-react";
 import emailjs from "@emailjs/browser"; // Import emailjs
 
 type QuoteProps = {
-  quoteItem: { id: number, quantity: number }[];
-  setQuoteItem: React.Dispatch<React.SetStateAction<{ id: number, quantity: number }[]>>;
+  quoteItem: { id: number; quantity: number }[];
+  setQuoteItem: React.Dispatch<
+    React.SetStateAction<{ id: number; quantity: number }[]>
+  >;
 };
 
-const QuoteSummary: React.FC<QuoteProps> = ({quoteItem,setQuoteItem}) => {
+const QuoteSummary: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
   // Quote items state with quantity
   // const [quoteItems, setQuoteItems] = useState<
   //   { id: number; quantity: number }[]
@@ -92,9 +95,9 @@ const QuoteSummary: React.FC<QuoteProps> = ({quoteItem,setQuoteItem}) => {
   // Confirm remove item
   const confirmRemoveItem = () => {
     if (itemToRemove !== null) {
-      setQuoteItem((prevItems) =>
-        prevItems.filter((item) => item.id !== itemToRemove)
-      );
+      const removeItem = quoteItem.filter((item) => item.id !== itemToRemove);
+      setQuoteItem(removeItem);
+      localStorage.setItem("addToQuote", JSON.stringify(removeItem));
       setShowRemoveModal(false);
       setItemToRemove(null);
     }
@@ -107,6 +110,7 @@ const QuoteSummary: React.FC<QuoteProps> = ({quoteItem,setQuoteItem}) => {
   const confirmClearQuote = () => {
     setQuoteItem([]);
     setShowClearModal(false);
+    localStorage.removeItem("addToQuote");
   };
   // Handle input change
   const handleInputChange = (
@@ -202,20 +206,21 @@ const QuoteSummary: React.FC<QuoteProps> = ({quoteItem,setQuoteItem}) => {
         deliveryAddress: `${customerInfo.street}, ${customerInfo.city}, ${customerInfo.state}, ${customerInfo.zipCode}, ${customerInfo.country}`,
         items: quoteItem.reduce((total, item) => total + item.quantity, 0),
         total: formatPrice(calculateSubtotal()),
-        containerDetails: quoteItem.map((item) => {
-          const container = getContainerById(item.id);
-          return container
-            ? `${container.type} (Qty: ${item.quantity}, Price: ${formatPrice(
-                Number(container.price)
-              )} each)`
-            : null;
-        }).join(", "),
+        containerDetails: quoteItem
+          .map((item) => {
+            const container = getContainerById(item.id);
+            return container
+              ? `${container.type} (Qty: ${item.quantity}, Price: ${formatPrice(
+                  Number(container.price)
+                )} each)`
+              : null;
+          })
+          .join(", "),
         notes: customerInfo.notes,
       };
 
       emailjs
         .send(
-          
           "service_ivi64bd", // Replace with your EmailJS service ID
           "template_t98fdfd", // Replace with your EmailJS template ID
           templateParams,
@@ -251,58 +256,56 @@ const QuoteSummary: React.FC<QuoteProps> = ({quoteItem,setQuoteItem}) => {
   // Suggested containers for empty state
   const suggestedContainers = ContainerType.slice(0, 3);
   // Listen for "add to quote" events from the product page via localStorage
-  useEffect(() => {
-    // On mount, check if there's a pending addToQuote event in localStorage (for same-tab navigation)
-    const addToQuote = localStorage.getItem("addToQuote");
-    if (addToQuote) {
-      try {
-        const { id, quantity } = JSON.parse(addToQuote);
-        setQuoteItem((prev) => {
-          const exists = prev.find((item) => item.id === id);
-          if (exists) {
-            return prev.map((item) =>
-              item.id === id
-                ? { ...item, quantity: item.quantity + (quantity || 1) }
-                : item
-            );
-          }
-          return [...prev, { id, quantity: quantity || 1 }];
-        });
-      } catch {
-        // ignore parse errors
+  // useEffect(() => {
+  //   // On mount, check if there's a pending addToQuote event in localStorage (for same-tab navigation)
+  //   const addToQuote = localStorage.getItem("addToQuote");
+  //   if (addToQuote) {
+  //     try {
+  //       const { id, quantity } = JSON.parse(addToQuote);
+  //       setQuoteItem((prev) => {
+  //         const exists = prev.find((item) => item.id === id);
+  //         if (exists) {
+  //           return prev.map((item) =>
+  //             item.id === id
+  //               ? { ...item, quantity: item.quantity + (quantity || 1) }
+  //               : item
+  //           );
+  //         }
+  //         return [...prev, { id, quantity: quantity || 1 }];
+  //       });
+  //     } catch {
+  //       // ignore parse errors
 
-        console.error("Failed to parse addToQuote from localStorage");
-      }
-      localStorage.removeItem("addToQuote");
-    }
+  //       console.error("Failed to parse addToQuote from localStorage");
+  //     }
+  //     localStorage.removeItem("addToQuote");
+  //   }
 
-    const handleStorage = (event: StorageEvent) => {
-      if (event.key === "addToQuote" && event.newValue) {
-        try {
-          const { id, quantity } = JSON.parse(event.newValue);
-          setQuoteItem((prev) => {
-            const exists = prev.find((item) => item.id === id);
-            if (exists) {
-              return prev.map((item) =>
-                item.id === id
-                  ? { ...item, quantity: item.quantity + (quantity || 1) }
-                  : item
-              );
-            }
-            return [...prev, { id, quantity: quantity || 1 }];
-          });
-        } catch {
-          // ignore parse errors
-        }
-        localStorage.removeItem("addToQuote");
-      }
-    };
-    window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
-  }, []);
+  //   const handleStorage = (event: StorageEvent) => {
+  //     if (event.key === "addToQuote" && event.newValue) {
+  //       try {
+  //         const { id, quantity } = JSON.parse(event.newValue);
+  //         setQuoteItem((prev) => {
+  //           const exists = prev.find((item) => item.id === id);
+  //           if (exists) {
+  //             return prev.map((item) =>
+  //               item.id === id
+  //                 ? { ...item, quantity: item.quantity + (quantity || 1) }
+  //                 : item
+  //             );
+  //           }
+  //           return [...prev, { id, quantity: quantity || 1 }];
+  //         });
+  //       } catch {
+  //         // ignore parse errors
+  //       }
+  //       localStorage.removeItem("addToQuote");
+  //     }
+  //   };
+  //   window.addEventListener("storage", handleStorage);
+  //   return () => window.removeEventListener("storage", handleStorage);
+  // }, []);
   // Handle email sending
-
-    
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -868,11 +871,7 @@ const QuoteSummary: React.FC<QuoteProps> = ({quoteItem,setQuoteItem}) => {
           <div className="bg-white rounded-lg shadow-md p-8 text-center">
             <div className="max-w-md mx-auto">
               <div className="mb-6">
-                <img
-                  src="https://readdy.ai/api/search-image?query=A%2520minimalist%2520illustration%2520of%2520an%2520empty%2520shopping%2520cart%2520or%2520quote%2520list%252C%2520with%2520a%2520simple%2520outline%2520style%252C%2520on%2520a%2520clean%2520white%2520background%252C%2520showing%2520the%2520concept%2520of%2520an%2520empty%2520state%2520in%2520an%2520e-commerce%2520application%252C%2520with%2520soft%2520blue%2520accents&width=300&height=200&seq=empty001&orientation=landscape"
-                  alt="Empty Quote"
-                  className="w-48 h-auto mx-auto"
-                />
+                <span className="block margin-auto bg-red"><Ban size={50}/></span>
               </div>
               <h2 className="text-2xl font-bold text-gray-800 mb-3">
                 Your quote is empty
