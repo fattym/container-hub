@@ -1,6 +1,6 @@
 // The exported code uses Tailwind CSS. Install Tailwind CSS in your dev environment to ensure all styles work.
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { ContainerType } from "./containerTypes";
 import Navbar2 from "./com/nvabar2";
 import Footer from "./com/footer";
@@ -160,18 +160,8 @@ const Product: React.FC<QuoteProps> = ({quoteItem,setQuoteItem}) => {
 
   // Handle navigation to comparison page with selected items
 
-  const navigate = useNavigate();
-  const [selectedItems] = useState<number[]>([]); // State to hold selected container IDs
 
-  const handleCompareClick = () => {
-    if (selectedItems.length > 0) {
-      navigate("/compare", { state: { compareItems: selectedItems } });
-    } else {
-      alert("Please select items to compare.");
-    }
-  };
-
-  const handleAddToQuote = (productId: number, quantity: number = 1) => {
+const handleAddToQuote = (productId: number, quantity: number = 1) => {
     setQuoteItem((prev) => [...prev, { id: productId, quantity: quantity }]);
     // Write the item details to localStorage.
     // The QuoteSummary page is listening for this 'addToQuote' key.
