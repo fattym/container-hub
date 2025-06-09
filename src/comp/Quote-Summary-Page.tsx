@@ -112,6 +112,8 @@ const QuoteSummary: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
     setShowClearModal(false);
     localStorage.removeItem("addToQuote");
   };
+
+
   // Handle input change
   const handleInputChange = (
     e: React.ChangeEvent<

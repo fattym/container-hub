@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ContainerType } from "./containerTypes"; // Import your shared container data
 import Navbar2 from "./com/nvabar2";
@@ -11,6 +11,18 @@ type QuoteProps = {
 const Detail: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
   const { id } = useParams<{ id: string }>();
   const container = ContainerType.find((c) => c.id === Number(id));
+
+  useEffect(() => {
+    localStorage.setItem("addToQuote", JSON.stringify(quoteItem));
+  }, [quoteItem]);
+
+  const handleAddToQuote = (productId: number, quantity: number = 1) => {
+    setQuoteItem((prev) => [...prev, { id: productId, quantity: quantity }]);
+    // Write the item details to localStorage.
+    // The QuoteSummary page is listening for this 'addToQuote' key.
+  };
+
+
 
   // Fallback if not found
   if (!container) {
@@ -26,6 +38,8 @@ const Detail: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
   // Example FAQs (can be moved to shared data if needed)
 
   const [activeTab, setActiveTab] = useState("specifications");
+
+  
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -82,12 +96,12 @@ const Detail: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
                     {container.price}
                   </span>
                 </div>
-                <Link
-                  to="/quote-summary"
+                <button
+                  onClick={()=>handleAddToQuote(container.id)}
                   className="block w-full mb-4 bg-blue-100 hover:bg-blue-200 text-blue-700 py-3 rounded-lg font-medium text-center transition-colors"
                 >
-                  View Quote Summary
-                </Link>
+                  Add to Quote
+                </button>
               </div>
             </div>
           </div>
