@@ -4,11 +4,13 @@ import Navbar2 from "./com/nvabar2";
 import { Link } from "react-router-dom";
 
 type QuoteProps = {
-  quoteItem: { id: number, quantity: number }[];
-  setQuoteItem: React.Dispatch<React.SetStateAction<{ id: number, quantity: number }[]>>;
+  quoteItem: { id: number; quantity: number }[];
+  setQuoteItem: React.Dispatch<
+    React.SetStateAction<{ id: number; quantity: number }[]>
+  >;
 };
 
-const ContactPage: React.FC<QuoteProps> = ({quoteItem,setQuoteItem}) => {
+const ContactPage: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -310,7 +312,7 @@ const ContactPage: React.FC<QuoteProps> = ({quoteItem,setQuoteItem}) => {
                     <li className="flex items-center">
                       <i className="fas fa-envelope text-blue-600 mr-3"></i>
                       <span className="text-gray-700">
-                        info@containerhub.com
+                        contact@pitchforwardgroup.com
                       </span>
                     </li>
                     <li className="flex items-center">
@@ -332,7 +334,7 @@ const ContactPage: React.FC<QuoteProps> = ({quoteItem,setQuoteItem}) => {
                     <li className="flex items-center">
                       <i className="fas fa-envelope text-green-600 mr-3"></i>
                       <span className="text-gray-700">
-                        sales@containerhub.com
+                        sales@pitchforwardgroup.com
                       </span>
                     </li>
                     <li className="flex items-center">
@@ -358,7 +360,7 @@ const ContactPage: React.FC<QuoteProps> = ({quoteItem,setQuoteItem}) => {
                     <li className="flex items-center">
                       <i className="fas fa-envelope text-purple-600 mr-3"></i>
                       <span className="text-gray-700">
-                        support@containerhub.com
+                        technical@pitchforwardgroup.com
                       </span>
                     </li>
                     <li className="flex items-center">

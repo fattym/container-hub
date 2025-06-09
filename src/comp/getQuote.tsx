@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { ArrowLeft } from "lucide-react";
-
+import Navbar2 from "./com/nvabar2";
+import { Link } from "react-router-dom";
 // Types
 type ContainerInfo = {
   type: string;
@@ -53,18 +53,25 @@ const ShippingQuoteForm: React.FC = () => {
 
   return (
     <div>
-      <header className="bg-blue-600 text-white py-4 px-6 flex items-center gap-3">
-        <a href="/" className="flex items-center gap-2 hover:underline">
-          <ArrowLeft className="w-5 h-5" />
-          <span>Back Home</span>
-        </a>
-        <div className="text-xl font-bold text-white-600">
-          <i className="fas fa-ship mr-2"></i>
-          ContainerHub
+      <Navbar2 quoteItem={[]} setQuoteItem={() => {}} />
+      <div className="bg-blue-600 text-white py-8">
+        <div className="container mx-auto px-4">
+          <h1 className="text-3xl md:text-4xl font-bold">
+            Pitch Container Hub
+          </h1>
+          <div className="flex items-center mt-2 text-sm">
+            <Link
+              to={"/"}
+              data-readdy="true"
+              className="text-blue-100 hover:text-white transition-colors cursor-pointer"
+            >
+              Home
+            </Link>
+            <i className="fas fa-chevron-right mx-2 text-xs text-blue-200"></i>
+            <span>Products</span>
+          </div>
         </div>
-        <h1 className="ml-auto text-xl font-bold">Shipping Quote</h1>
-      </header>
-
+      </div>
       <div className="max-w-2xl mx-auto p-8 bg-gradient-to-br from-white to-blue-50 rounded-3xl shadow-2xl space-y-6 mt-6">
         <h2 className="text-3xl font-bold text-center text-blue-700 mb-6">
           Shipping Container Quote
@@ -103,19 +110,37 @@ const ShippingQuoteForm: React.FC = () => {
                   <option value="Tank">Tank</option>
                 </select>
               </div>
-
+              <div className="mb-4">
+                <label htmlFor="packageType" className="block font-medium mb-1">
+                  Choose a package type:
+                </label>
+                <select
+                  id="packageType"
+                  value={formData.container.type}
+                  className="border rounded px-3 py-2 w-full"
+                >
+                  <option value="Basic">Basic</option>
+                  <option value="Standard">Standard</option>
+                  <option value="Premium">Premium</option>
+                </select>
+              </div>
               <div className="mb-3">
                 <label className="block mb-1 font-medium">Size</label>
-                <input
-                  type="text"
+                <select
                   className="w-full border rounded-lg px-3 py-2"
                   value={formData.container.size}
                   onChange={(e) =>
                     handleChange("container", "size", e.target.value)
                   }
-                  placeholder="e.g. 20ft, 40ft"
-                />
+                >
+                  <option value="">-- Select Size --</option>
+                  <option value="20ft">20ft</option>
+                  <option value="40ft">40ft</option>
+                  <option value="40ft High Cube">40ft High Cube</option>
+                  <option value="45ft High Cube">45ft High Cube</option>
+                </select>
               </div>
+
               <div className="mb-3">
                 <label className="block mb-1 font-medium">Quantity</label>
                 <input

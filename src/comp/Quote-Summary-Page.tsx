@@ -7,11 +7,13 @@ import Footer from "./com/footer";
 import emailjs from "@emailjs/browser"; // Import emailjs
 
 type QuoteProps = {
-  quoteItem: { id: number, quantity: number }[];
-  setQuoteItem: React.Dispatch<React.SetStateAction<{ id: number, quantity: number }[]>>;
+  quoteItem: { id: number; quantity: number }[];
+  setQuoteItem: React.Dispatch<
+    React.SetStateAction<{ id: number; quantity: number }[]>
+  >;
 };
 
-const QuoteSummary: React.FC<QuoteProps> = ({quoteItem,setQuoteItem}) => {
+const QuoteSummary: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
   // Quote items state with quantity
   // const [quoteItems, setQuoteItems] = useState<
   //   { id: number; quantity: number }[]
@@ -202,20 +204,21 @@ const QuoteSummary: React.FC<QuoteProps> = ({quoteItem,setQuoteItem}) => {
         deliveryAddress: `${customerInfo.street}, ${customerInfo.city}, ${customerInfo.state}, ${customerInfo.zipCode}, ${customerInfo.country}`,
         items: quoteItem.reduce((total, item) => total + item.quantity, 0),
         total: formatPrice(calculateSubtotal()),
-        containerDetails: quoteItem.map((item) => {
-          const container = getContainerById(item.id);
-          return container
-            ? `${container.type} (Qty: ${item.quantity}, Price: ${formatPrice(
-                Number(container.price)
-              )} each)`
-            : null;
-        }).join(", "),
+        containerDetails: quoteItem
+          .map((item) => {
+            const container = getContainerById(item.id);
+            return container
+              ? `${container.type} (Qty: ${item.quantity}, Price: ${formatPrice(
+                  Number(container.price)
+                )} each)`
+              : null;
+          })
+          .join(", "),
         notes: customerInfo.notes,
       };
 
       emailjs
         .send(
-          
           "service_ivi64bd", // Replace with your EmailJS service ID
           "template_t98fdfd", // Replace with your EmailJS template ID
           templateParams,
@@ -301,8 +304,6 @@ const QuoteSummary: React.FC<QuoteProps> = ({quoteItem,setQuoteItem}) => {
     return () => window.removeEventListener("storage", handleStorage);
   }, []);
   // Handle email sending
-
-    
 
   return (
     <div className="min-h-screen bg-gray-50">
