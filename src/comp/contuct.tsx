@@ -131,6 +131,11 @@ const ContactPage: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
                 soon as possible.
               </p>
               <form
+              data-netlify="true"
+                netlify-honeypot="bot-field"
+                action="/contact"
+                method="POST"
+                data-netlify-recaptcha="true"
                 onSubmit={handleSubmit}
                 className="bg-gray-50 rounded-xl p-8 shadow-lg"
               >
@@ -307,7 +312,7 @@ const ContactPage: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
                   <ul className="space-y-3">
                     <li className="flex items-center">
                       <i className="fas fa-phone-alt text-blue-600 mr-3"></i>
-                      <span className="text-gray-700">(800) 555-1234</span>
+                      <span className="text-gray-700">(+254) 707 586837</span>
                     </li>
                     <li className="flex items-center">
                       <i className="fas fa-envelope text-blue-600 mr-3"></i>
@@ -329,7 +334,7 @@ const ContactPage: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
                   <ul className="space-y-3">
                     <li className="flex items-center">
                       <i className="fas fa-phone-alt text-green-600 mr-3"></i>
-                      <span className="text-gray-700">(800) 555-2345</span>
+                      <span className="text-gray-700">(+254) 707 586837</span>
                     </li>
                     <li className="flex items-center">
                       <i className="fas fa-envelope text-green-600 mr-3"></i>
@@ -354,7 +359,7 @@ const ContactPage: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
                     <li className="flex items-center">
                       <i className="fas fa-headset text-purple-600 mr-3"></i>
                       <span className="text-gray-700">
-                        (800) 555-3456 (24/7)
+                      (+254) 707 586837 (24/7)
                       </span>
                     </li>
                     <li className="flex items-center">
@@ -655,8 +660,8 @@ const ContactPage: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
               Send a Message
             </a>
             <a
-              href="https://readdy.ai/home/28cfcebc-f00c-493e-a707-42ea23f910d2/ec23607a-d11c-460a-8236-6351e7f9a906"
-              data-readdy="true"
+              href="https://www.pitchforwardgroup.com/"
+              target="_blank" 
               className="bg-transparent border-2 border-white hover:bg-white/10 text-white px-8 py-3 rounded-lg font-medium transition-colors !rounded-button whitespace-nowrap cursor-pointer"
             >
               Explore Our Services

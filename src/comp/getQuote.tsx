@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar2 from "./com/nvabar2";
 import { Link } from "react-router-dom";
+import emailjs from "@emailjs/browser";
 // Types
 type ContainerInfo = {
   type: string;
@@ -45,10 +46,44 @@ const ShippingQuoteForm: React.FC = () => {
 
   const nextStep = () => setStep((prev) => Math.min(prev + 1, totalSteps));
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
-  const handleSubmit = () => {
-    console.log("Submitted:", formData);
-    alert("Quote submitted!");
+ 
+  // Initialize EmailJS (optional if using public key in send)
+  const EMAILJS_SERVICE_ID = "service_rnyle4j";
+  const EMAILJS_TEMPLATE_ID = "template_3ywz8qm";
+  const EMAILJS_PUBLIC_KEY = "zRBm-tlCC38YU7Rok";
+  
+  // Prepare EmailJS parameters
+  const handleSubmit = async () => {
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          container_type: formData.container.type,
+          container_size: formData.container.size,
+          container_quantity: formData.container.quantity,
+          pickup_location: formData.location.pickupLocation,
+          delivery_location: formData.location.deliveryLocation,
+          pickup_date: formData.location.pickupDate,
+          contact_name: formData.contact.name,
+          contact_email: formData.contact.email,
+          contact_phone: formData.contact.phone,
+        },
+        EMAILJS_PUBLIC_KEY
+      );
+      alert("Quote submitted! We'll contact you soon.");
+      setStep(1);
+      setFormData({
+        container: { type: "", size: "", quantity: 1 },
+        location: { pickupLocation: "", deliveryLocation: "", pickupDate: "" },
+        contact: { name: "", email: "", phone: "" },
+      });
+    } catch (error) {
+      alert("Failed to submit quote. Please try again.");
+      console.error("EmailJS error:", error);
+    }
   };
+
   const progressPercent = (step / totalSteps) * 100;
 
   return (

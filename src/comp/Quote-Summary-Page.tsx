@@ -113,7 +113,6 @@ const QuoteSummary: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
     localStorage.removeItem("addToQuote");
   };
 
-
   // Handle input change
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -200,26 +199,62 @@ const QuoteSummary: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
       setShowSuccessModal(true);
 
       // EmailJS integration
+      // Build container details as a formatted string for email
+      const containerDetails = quoteItem
+        .map((item) => {
+          const container = getContainerById(item.id);
+          if (!container) return null;
+          return `Type: ${container.type}
+     
+    Size: ${container.size}
+    Condition: ${container.condition}
+    Qty: ${item.quantity}
+    features:
+    ${Array.isArray(container.features)
+      ? container.features.map((f: string) => `- ${f}`).join("\n")
+      : `- ${container.features}`}
+    
+    Price: ${formatPrice(Number(container.price))} each
+
+    `;
+        })
+        .filter(Boolean)
+        .join("\n");
+
       const templateParams = {
         reference: reference,
+        date: new Date().toLocaleString("en-KE", {
+          timeZone: "Africa/Nairobi",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false,
+        }),
+        images: quoteItem
+          .map((item) => {
+            const container = getContainerById(item.id);
+            return container ? container.image : null;
+          })
+          .filter(Boolean)
+          .join(", "),
         name: customerInfo.fullName,
         email: customerInfo.email,
         phone: customerInfo.phone,
         deliveryAddress: `${customerInfo.street}, ${customerInfo.city}, ${customerInfo.state}, ${customerInfo.zipCode}, ${customerInfo.country}`,
         items: quoteItem.reduce((total, item) => total + item.quantity, 0),
         total: formatPrice(calculateSubtotal()),
-        containerDetails: quoteItem
-          .map((item) => {
-            const container = getContainerById(item.id);
-            return container
-              ? `${container.type} (Qty: ${item.quantity}, Price: ${formatPrice(
-                  Number(container.price)
-                )} each)`
-              : null;
-          })
-          .join(", "),
+        containerDetails: containerDetails,
         notes: customerInfo.notes,
+        
       };
+      // Send email using EmailJS
+      // const templateParams = { 
+
+
+
 
       emailjs
         .send(
@@ -240,6 +275,7 @@ const QuoteSummary: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
             console.error("Failed to send quote email", error);
           }
         );
+      console.log(templateParams.containerDetails);
       // Reset form submission state
       setFormSubmitted(false);
 
@@ -873,7 +909,9 @@ const QuoteSummary: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
           <div className="bg-white rounded-lg shadow-md p-8 text-center">
             <div className="max-w-md mx-auto">
               <div className="mb-6">
-                <span className="block margin-auto bg-red"><Ban size={50}/></span>
+                <span className="block margin-auto bg-red">
+                  <Ban size={50} />
+                </span>
               </div>
               <h2 className="text-2xl font-bold text-gray-800 mb-3">
                 Your quote is empty

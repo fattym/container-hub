@@ -313,7 +313,8 @@ const ServicePage: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
             </p>
             <div className="flex flex-wrap gap-4">
               <a
-                href="#services"
+               href="https://www.pitchforwardgroup.com/"
+               target="_blank" 
                 className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors !rounded-button whitespace-nowrap cursor-pointer"
               >
                 Explore Our Services
@@ -619,6 +620,9 @@ const ServicePage: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
               </div>
             ) : (
               <form
+              data-netlify="netlify"
+              action="/contact"
+              method="POST"
                 onSubmit={handleSubmit}
                 className="bg-gray-50 rounded-xl shadow-lg p-8"
               >
