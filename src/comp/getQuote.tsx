@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Navbar2 from "./com/nvabar2";
 import { Link } from "react-router-dom";
 import emailjs from "@emailjs/browser";
+import axios from "axios"; // Import axios
+
 // Types
 type ContainerInfo = {
   type: string;
@@ -46,15 +48,21 @@ const ShippingQuoteForm: React.FC = () => {
 
   const nextStep = () => setStep((prev) => Math.min(prev + 1, totalSteps));
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
- 
+
   // Initialize EmailJS (optional if using public key in send)
   const EMAILJS_SERVICE_ID = "service_rnyle4j";
   const EMAILJS_TEMPLATE_ID = "template_3ywz8qm";
   const EMAILJS_PUBLIC_KEY = "zRBm-tlCC38YU7Rok";
-  
+
+  // Airtable configuration
+  const AIRTABLE_API_KEY = "YOUR_AIRTABLE_API_KEY"; // Replace with your Airtable API key
+  const AIRTABLE_BASE_ID = "YOUR_AIRTABLE_BASE_ID"; // Replace with your Airtable Base ID
+  const AIRTABLE_TABLE_NAME = "YOUR_AIRTABLE_TABLE_NAME"; // Replace with your Airtable Table Name
+
   // Prepare EmailJS parameters
   const handleSubmit = async () => {
     try {
+      // Send to EmailJS
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
@@ -71,6 +79,41 @@ const ShippingQuoteForm: React.FC = () => {
         },
         EMAILJS_PUBLIC_KEY
       );
+
+      // Send to Airtable
+      try {
+        const airtableData = {
+          records: [
+            {
+              fields: {
+                ContainerType: formData.container.type,
+                ContainerSize: formData.container.size,
+                ContainerQuantity: formData.container.quantity,
+                PickupLocation: formData.location.pickupLocation,
+                DeliveryLocation: formData.location.deliveryLocation,
+                PickupDate: formData.location.pickupDate,
+                ContactName: formData.contact.name,
+                ContactEmail: formData.contact.email,
+                ContactPhone: formData.contact.phone,
+              },
+            },
+          ],
+        };
+
+        const airtableUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`;
+        await axios.post(airtableUrl, airtableData, {
+          headers: {
+            Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+        });
+        console.log("Data sent to Airtable successfully");
+      } catch (airtableError) {
+        console.error("Airtable error:", airtableError);
+        alert("Failed to submit quote to Airtable. Please try again.");
+        return; // Exit if Airtable submission fails
+      }
+
       alert("Quote submitted! We'll contact you soon.");
       setStep(1);
       setFormData({

@@ -487,6 +487,7 @@ const ServicePage: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
                     ))}
                   </ul>
                   <button
+                  type="button"
                   onClick={() => window.location.href = "/getQuote"}
                     
                   className={`w-full py-3 rounded-lg font-medium transition-colors !rounded-button whitespace-nowrap cursor-pointer ${tier.recommended ? "bg-blue-600 hover:bg-blue-700 text-white" : "bg-gray-100 hover:bg-gray-200 text-gray-800"}`}
