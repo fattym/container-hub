@@ -127,7 +127,7 @@ export const ContainerType = [
     features5: "Durable construction for long-term use",
     features6: "Versatile for various temperature-sensitive cargo",
     additionalImages: "h",
-    inStock: "Pre order",
+    preOrder: true,
     condition: "New",
     size: "40ft Refrigerated",
     deliveryOptions: ["Standard Delivery", "Express Delivery", "Pickup"],

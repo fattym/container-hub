@@ -248,6 +248,7 @@ const QuoteSummary: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
         total: formatPrice(calculateSubtotal()),
         containerDetails: containerDetails,
         notes: customerInfo.notes,
+        country: customerInfo.country,
         
       };
       // Send email using EmailJS
