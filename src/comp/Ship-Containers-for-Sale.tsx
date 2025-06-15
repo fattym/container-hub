@@ -88,7 +88,7 @@ const Home: React.FC = () => {
                 Browse Containers
               </Link>
               <Link
-                to="/getQuote"
+                to="/services"
                 className="bg-transparent hover:bg-white hover:text-blue-600 text-white px-6 py-3 rounded-lg font-medium border-2 border-white transition-colors !rounded-button whitespace-nowrap cursor-pointer"
               >
                 Ask Quote

@@ -594,13 +594,67 @@ const QuoteSummary: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
                       )}
                     </div>
                     <div>
-                      <label
+                        <label
                         className="block text-gray-700 mb-2"
                         htmlFor="phone"
-                      >
+                        >
                         Phone Number <span className="text-red-500">*</span>
-                      </label>
-                      <input
+                        </label>
+                        <div className="flex">
+                        <select
+                          className="px-2 py-2 border border-gray-300 rounded-l-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          style={{ minWidth: "80px" }}
+                          value={customerInfo.phone.startsWith("+254") ? "+254" : customerInfo.phone.startsWith("+255") ? "+255" : customerInfo.phone.startsWith("+256") ? "+256" : customerInfo.phone.startsWith("+250") ? "+250" : customerInfo.phone.startsWith("+257") ? "+257" : customerInfo.phone.startsWith("+211") ? "+211" : customerInfo.phone.startsWith("+251") ? "+251" : customerInfo.phone.startsWith("+252") ? "+252" : customerInfo.phone.startsWith("+291") ? "+291" : ""}
+                          onChange={e => {
+                          // Replace country code if already present, else prepend
+                          const code = e.target.value;
+                          setCustomerInfo(prev => {
+                            let phone = prev.phone.replace(/^\+\d{3}/, "");
+                            if (phone.startsWith("0")) phone = phone.slice(1);
+                            return { ...prev, phone: code + phone };
+                          });
+                          }}
+                        >
+                          <option value="">Code</option>
+                          <option value="+254">🇰🇪 +254 (Kenya)</option>
+                          <option value="+255">🇹🇿 +255 (Tanzania)</option>
+                          <option value="+256">🇺🇬 +256 (Uganda)</option>
+                          <option value="+250">🇷🇼 +250 (Rwanda)</option>
+                          <option value="+257">🇧🇮 +257 (Burundi)</option>
+                          <option value="+211">🇸🇸 +211 (South Sudan)</option>
+                          <option value="+251">🇪🇹 +251 (Ethiopia)</option>
+                          <option value="+252">🇸🇴 +252 (Somalia)</option>
+                          <option value="+291">🇪🇷 +291 (Eritrea)</option>
+                        </select>
+                        <input
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          value={
+                          customerInfo.phone.replace(
+                            /^(\+\d{3})/,
+                            ""
+                          )
+                          }
+                          onChange={e => {
+                          // Keep the country code, update the rest
+                          const codeMatch = customerInfo.phone.match(/^\+\d{3}/);
+                          const code = codeMatch ? codeMatch[0] : "";
+                          let value = e.target.value.replace(/^0+/, "");
+                          setCustomerInfo(prev => ({
+                            ...prev,
+                            phone: code + value,
+                          }));
+                          }}
+                          className={`w-full px-4 py-2 border-t border-b border-r ${
+                          formErrors.phone
+                            ? "border-red-500"
+                            : "border-gray-300"
+                          } rounded-r-lg focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                          placeholder="712345678"
+                        />
+                        </div>
+                      {/* <input
                         type="tel"
                         id="phone"
                         name="phone"
@@ -611,7 +665,7 @@ const QuoteSummary: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
                             ? "border-red-500"
                             : "border-gray-300"
                         } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                      />
+                      /> */}
                       {formErrors.phone && formSubmitted && (
                         <p className="text-red-500 text-sm mt-1">
                           {formErrors.phone}
@@ -737,6 +791,14 @@ const QuoteSummary: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
                             : "border-gray-300"
                         } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white`}
                       >
+                            <option value="Uganda">Uganda</option>
+                        <option value="Tanzania">Tanzania</option>
+                        <option value="Rwanda">Rwanda</option>
+                        <option value="Burundi">Burundi</option>
+                        <option value="South Sudan">South Sudan</option>
+                        <option value="Ethiopia">Ethiopia</option>
+                        <option value="Somalia">Somalia</option>
+                        <option value="Eritrea">Eritrea</option>
                         <option value="Kenya">Kenya</option>
                         <option value="Baringo">Baringo</option>
                         <option value="Bomet">Bomet</option>
@@ -786,14 +848,18 @@ const QuoteSummary: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
                         <option value="Wajir">Wajir</option>
                         <option value="West Pokot">West Pokot</option>
                         <option value="">Select Country</option>
-                        <option value="United States">United States</option>
-                        <option value="Canada">Canada</option>
-                        <option value="United Kingdom">United Kingdom</option>
-                        <option value="Australia">Australia</option>
-                        <option value="Germany">Germany</option>
-                        <option value="France">France</option>
-                        <option value="Japan">Japan</option>
-                        <option value="China">China</option>
+                      <option value="Nairobi">Nairobi</option>
+                        <option value="Mombasa">Mombasa</option>
+                        <option value="Kisumu">Kisumu</option>
+                        <option value="Nyeri">Nyeri</option>
+                        <option value="Kitui">Kitui</option>
+                        <option value="Machakos">Machakos</option>
+                        <option value="Kericho">Kericho</option>
+                        <option value="Kiambu">Kiambu</option>
+                        <option value="Turkana">Turkana</option>
+                        <option value="Garissa">Garissa</option>
+                        <option value="Bomet">Bomet</option>  
+                    
                       </select>
                       {formErrors.country && formSubmitted && (
                         <p className="text-red-500 text-sm mt-1">

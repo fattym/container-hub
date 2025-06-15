@@ -99,6 +99,7 @@ const ServicePage: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
       });
     }, 3000);
   };
+
   // Toggle service details
   const toggleService = (service: string) => {
     if (activeService === service) {
@@ -288,6 +289,7 @@ const ServicePage: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
       prev === 0 ? testimonials.length - 1 : prev - 1
     );
   };
+  
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -434,12 +436,7 @@ const ServicePage: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
                     </div>
                   </div>
                   <div className="flex justify-center">
-                    <a
-                      href="#pricing"
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors mr-4 !rounded-button whitespace-nowrap cursor-pointer"
-                    >
-                      View Pricing Options
-                    </a>
+                 
                     <a
                       href="#contact"
                       className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-3 rounded-lg font-medium transition-colors !rounded-button whitespace-nowrap cursor-pointer"
@@ -453,64 +450,7 @@ const ServicePage: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
         </div>
       )}
       {/* Pricing Section */}
-      <div id="pricing" className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-              Service Pricing
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Choose the service tier that best fits your needs and budget.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {pricingTiers.map((tier, index) => (
-              <div
-                key={index}
-                className={`rounded-xl overflow-hidden shadow-lg transition-all ${tier.recommended ? "border-2 border-blue-500 relative transform md:-translate-y-4" : "border border-gray-200"}`}
-              >
-                {tier.recommended && (
-                  <div className="bg-blue-500 text-white text-center py-2 font-medium">
-                    Recommended
-                  </div>
-                )}
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold text-gray-800 mb-2">
-                    {tier.name}
-                  </h3>
-                  <p className="text-gray-600 mb-6">{tier.description}</p>
-                  <ul className="space-y-3 mb-8">
-                    {tier.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start">
-                        <i className="fas fa-check text-green-500 mt-1 mr-2"></i>
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Link
-                    to="/getQuote"
-                                       className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors !rounded-button whitespace-nowrap cursor-pointer"     
-                  >
-                    Get Quote
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="text-center mt-12 text-gray-600">
-            <p>
-              Need a custom solution?{" "}
-              <a
-                href="#contact"
-                className="text-blue-600 hover:text-blue-800 font-medium cursor-pointer"
-              >
-                Contact us
-              </a>{" "}
-              for personalized pricing.
-            </p>
-          </div>
-        </div>
-      </div>
+    
       {/* Testimonials */}
       <div className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
@@ -587,6 +527,7 @@ const ServicePage: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
         </div>
       </div>
       {/* Contact Form */}
+      
       <div id="contact" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -620,7 +561,9 @@ const ServicePage: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
               </div>
             ) : (
               <form
-              data-netlify="netlify"
+               id="contaform"
+                name="contaform"
+              data-netlify="true"
               action="/contact"
               method="POST"
                 onSubmit={handleSubmit}
@@ -673,7 +616,9 @@ const ServicePage: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
                   </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  
                   <div>
+                    
                     <label
                       htmlFor="phone"
                       className="block text-gray-700 font-medium mb-2"
@@ -687,11 +632,11 @@ const ServicePage: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
                       value={formData.phone}
                       onChange={handleInputChange}
                       className={`w-full px-4 py-3 rounded-lg border ${formErrors.phone ? "border-red-500" : "border-gray-300"} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
-                      placeholder="Enter your phone number"
+                      placeholder="Enter your phone number with +_ _"
                     />
                     {formErrors.phone && (
                       <p className="text-red-500 text-sm mt-1">
-                        {formErrors.phone}
+                        {formErrors.phone})
                       </p>
                     )}
                   </div>
@@ -840,7 +785,9 @@ const ServicePage: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
               <p className="text-blue-100 mb-4">
                 Chat with our team for immediate assistance
               </p>
-              <button className="bg-white text-blue-600 hover:bg-blue-50 px-6 py-2 rounded-lg font-medium transition-colors !rounded-button whitespace-nowrap cursor-pointer">
+              <button 
+              onClick={() => window.open("https://chat.whatsapp.com/F4K2rqS0hnNBOgTeYMTjQn", "_blank")}
+              className="bg-white text-blue-600 hover:bg-blue-50 px-6 py-2 rounded-lg font-medium transition-colors !rounded-button whitespace-nowrap cursor-pointer">
                 Start Chat
               </button>
             </div>

@@ -131,7 +131,10 @@ const ContactPage: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
                 soon as possible.
               </p>
               <form
-              data-netlify="true"
+              
+                id="contact-form"
+                name="contact-form"
+                data-netlify="true"
                 netlify-honeypot="bot-field"
                 action="/contact"
                 method="POST"
@@ -359,7 +362,7 @@ const ContactPage: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
                     <li className="flex items-center">
                       <i className="fas fa-headset text-purple-600 mr-3"></i>
                       <span className="text-gray-700">
-                      (+254) 707 586837 (24/7)
+                        (+254) 707 586837 (24/7)
                       </span>
                     </li>
                     <li className="flex items-center">
@@ -384,42 +387,37 @@ const ContactPage: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
                   <h3 className="text-lg font-bold text-gray-800 mb-4">
                     Alternative Ways to Connect
                   </h3>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="flex space-x-4 mb-6">
                     <a
-                      href="#"
-                      className="flex items-center justify-center bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+                      href="https://www.facebook.com/profile.php?id=61577373540052"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:text-blue-800 transition-colors text-2xl"
+                      aria-label="Facebook"
                     >
-                      <i className="fas fa-comments text-blue-600 mr-2"></i>
-                      <span className="text-gray-700 text-sm">Live Chat</span>
+                      <i className="fab fa-facebook-f"></i>
                     </a>
                     <a
-                      href="#"
-                      className="flex items-center justify-center bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+                      href="https://instagram.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-pink-500 hover:text-pink-700 transition-colors text-2xl"
+                      aria-label="Instagram"
                     >
-                      <i className="fas fa-phone-volume text-blue-600 mr-2"></i>
-                      <span className="text-gray-700 text-sm">
-                        Request Callback
-                      </span>
+                      <i className="fab fa-instagram"></i>
                     </a>
                     <a
-                      href="#"
-                      className="flex items-center justify-center bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+                      href="https://twitter.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-400 hover:text-blue-600 transition-colors text-2xl"
+                      aria-label="Twitter"
                     >
-                      <i className="fas fa-file-invoice-dollar text-blue-600 mr-2"></i>
-                      <span className="text-gray-700 text-sm">
-                        Request Quote
-                      </span>
-                    </a>
-                    <a
-                      href="#"
-                      className="flex items-center justify-center bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
-                    >
-                      <i className="fas fa-calendar-alt text-blue-600 mr-2"></i>
-                      <span className="text-gray-700 text-sm">
-                        Schedule Meeting
-                      </span>
+                      <i className="fab fa-twitter"></i>
                     </a>
                   </div>
+                 
+
                 </div>
               </div>
             </div>
@@ -479,7 +477,9 @@ const ContactPage: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
                   </li>
                 </ul>
                 <a
-                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://chat.whatsapp.com/F4K2rqS0hnNBOgTeYMTjQn"
                   className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium mt-4 cursor-pointer"
                 >
                   Get Directions
@@ -518,7 +518,9 @@ const ContactPage: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
                   </li>
                 </ul>
                 <a
-                  href="#"
+                  href="https://chat.whatsapp.com/F4K2rqS0hnNBOgTeYMTjQn"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium mt-4 cursor-pointer"
                 >
                   Get Directions
@@ -555,7 +557,9 @@ const ContactPage: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
                   </li>
                 </ul>
                 <a
-                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://chat.whatsapp.com/F4K2rqS0hnNBOgTeYMTjQn"
                   className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium mt-4 cursor-pointer"
                 >
                   Get Directions
@@ -661,16 +665,10 @@ const ContactPage: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
             </a>
             <a
               href="https://www.pitchforwardgroup.com/"
-              target="_blank" 
+              target="_blank"
               className="bg-transparent border-2 border-white hover:bg-white/10 text-white px-8 py-3 rounded-lg font-medium transition-colors !rounded-button whitespace-nowrap cursor-pointer"
             >
               Explore Our Services
-            </a>
-            <a
-              href="#"
-              className="bg-transparent border-2 border-white hover:bg-white/10 text-white px-8 py-3 rounded-lg font-medium transition-colors !rounded-button whitespace-nowrap cursor-pointer"
-            >
-              Request a Quote
             </a>
           </div>
         </div>
