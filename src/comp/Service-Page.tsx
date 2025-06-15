@@ -515,7 +515,7 @@ const ServicePage: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
                   will contact you shortly.
                 </p>
                 <button
-                  onClick={() => setFormSuccess(false)}
+                  onClick={() => setFormSuccess(true)}
                   className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors !rounded-button whitespace-nowrap cursor-pointer"
                 >
                   Submit Another Request
@@ -696,6 +696,26 @@ const ServicePage: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
                
                 <div className="flex justify-center">
                   <button
+                  onClick={() => {
+                    // Let the form submit normally to Netlify if valid
+                    // But trigger validation first
+                    const errors: { [key: string]: string } = {};
+                    if (!formData.name.trim()) errors.name = "Name is required";
+                    if (!formData.email.trim()) errors.email = "Email is required";
+                    else if (!/\S+@\S+\.\S+/.test(formData.email)) errors.email = "Email is invalid";
+                    if (!formData.phone.trim()) errors.phone = "Phone number is required";
+                    if (!formData.serviceType) errors.serviceType = "Please select a service type";
+                    if (!formData.details.trim()) errors.details = "Please provide project details";
+                    if (Object.keys(errors).length > 0) {
+                      setFormErrors(errors);
+                      // Prevent submit if errors
+                      const form = document.getElementById("contaform") as HTMLFormElement | null;
+                      if (form) form.reportValidity();
+                      return false;
+                    }
+                    // Otherwise, let the form submit to Netlify
+                    return true;
+                  }}
                     type="submit"
                     className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors !rounded-button whitespace-nowrap cursor-pointer"
                   >
