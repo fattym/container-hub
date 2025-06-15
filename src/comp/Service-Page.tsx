@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Navbar2 from "./com/nvabar2";
 
 import Footer from "./com/footer";
-import { Link } from "react-router-dom";
+
 
 
 type QuoteProps = {
@@ -198,45 +198,7 @@ const ServicePage: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
     },
   ];
   // Pricing tiers
-  const pricingTiers = [
-    {
-      name: "Basic",
-      description: "Essential services for standard needs",
-      features: [
-        "Standard service hours (9am-5pm)",
-        "Email support",
-        "Basic documentation",
-        "Single location service",
-      ],
-      recommended: false,
-    },
-    {
-      name: "Standard",
-      description: "Enhanced services with priority support",
-      features: [
-        "Extended service hours (7am-7pm)",
-        "Phone and email support",
-        "Comprehensive documentation",
-        "Multiple location service",
-        "Expedited scheduling",
-      ],
-      recommended: true,
-    },
-    {
-      name: "Premium",
-      description: "Comprehensive services with dedicated support",
-      features: [
-        "24/7 service availability",
-        "Dedicated account manager",
-        "Complete documentation package",
-        "Unlimited locations",
-        "Priority scheduling",
-        "Annual service plan",
-        "Emergency response guarantee",
-      ],
-      recommended: false,
-    },
-  ];
+ 
   // Testimonial data
   const testimonials = [
     {
