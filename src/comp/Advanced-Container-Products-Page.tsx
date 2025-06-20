@@ -633,17 +633,19 @@ const handleAddToQuote = (productId: number, quantity: number = 1) => {
                       </button>
                     </div>
                     <div className="p-4">
-                      <div className="flex justify-between items-start mb-2">
-                        <h3 className="text-lg font-bold text-gray-800">
-                          {container.type}
-                        </h3>
-                        <span className="text-blue-600 font-bold">
-                          {container.price.toLocaleString("en-US", {
-                            style: "currency",
-                            currency: "USD",
-                          })}
-                        </span>
-                      </div>
+                    <div className="flex justify-between items-start mb-2">
+  <h3 className="text-lg font-bold text-gray-800">
+    {container.type}
+  </h3>
+  {!container.preOrder ? (
+    <span className="text-blue-600 font-bold">
+      {container.price.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      })}
+    </span>
+  ) : null}
+</div>
                       <p className="text-gray-600 text-sm mb-4">
                         {container.description}
                       </p>
@@ -828,7 +830,9 @@ const handleAddToQuote = (productId: number, quantity: number = 1) => {
                           : "Pre order"}
                       </div>
                       <h3 className="text-2xl font-bold text-gray-800">
-                        {getContainerById(quickViewItem)?.price}
+                      {!getContainerById(quickViewItem)?.preOrder ? (
+    getContainerById(quickViewItem)?.price
+  ) : null}
                       </h3>
                     </div>
                     <div className="flex items-center">

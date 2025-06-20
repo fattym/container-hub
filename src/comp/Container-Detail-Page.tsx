@@ -88,12 +88,12 @@ const Detail: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
                 <p className="text-gray-600 mb-4">{container.description}</p>
                 <div className="mb-6">
                   <span className="inline-block bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">
-                    In Stock
+                    {container.condition}
                   </span>
                 </div>
                 <div className="mb-6">
                   <span className="text-2xl font-bold text-blue-600">
-                    {container.price}
+                  
                   </span>
                 </div>
                 <button

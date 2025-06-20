@@ -179,10 +179,7 @@ const Home: React.FC = () => {
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="text-xl font-bold">{container.type}</h3>
                     <span className="text-blue-600 font-bold">
-                      {container.price.toLocaleString("en-US", {
-                        style: "currency",
-                        currency: "USD",
-                      })}
+                     
                     </span>
                   </div>
                   <p className="text-gray-600 mb-4">{container.description}</p>
@@ -251,6 +248,52 @@ const Home: React.FC = () => {
         </div>
       </section>
       {/* Product Specifications */}
+
+      {/* FAQ */}
+      <section className="py-16 bg-gray-100">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-4">
+            Frequently Asked Questions
+          </h2>
+          <p className="text-gray-600 text-center max-w-3xl mx-auto mb-12">
+            We've got answers to the most common questions about our containers,
+            prices, and services.
+          </p>
+          <div className="space-y-6">
+            <details className="bg-white p-6 rounded-lg shadow-md">
+              <summary className="text-lg font-bold cursor-pointer">
+                What is the condition of your containers?
+              </summary>
+              <p className="mt-4 text-gray-600">
+                Our containers are in excellent condition, with a maximum age of
+                10 years. They are thoroughly inspected and certified by a third
+                party before delivery.
+              </p>
+            </details>
+            <details className="bg-white p-6 rounded-lg shadow-md">
+              <summary className="text-lg font-bold cursor-pointer">
+                Can I modify my container?
+              </summary>
+              <p className="mt-4 text-gray-600">
+                Yes, we offer a range of customization options including
+                painting, signage, shelving, and more. Please contact us to
+                discuss your specific requirements.
+              </p>
+            </details>
+            <details className="bg-white p-6 rounded-lg shadow-md">
+              <summary className="text-lg font-bold cursor-pointer">
+                What is the delivery process?
+              </summary>
+              <p className="mt-4 text-gray-600">
+                We offer fast and reliable delivery to any location across the
+                country. Containers are typically delivered within 7-10 working
+                days from the date of order.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-4">

@@ -59,18 +59,18 @@ const QuoteSummary: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
   // Calculate subtotal for an item
   const calculateItemSubtotal = (id: number, quantity: number) => {
     const Container = getContainerById(id);
-
+  
     if (!Container) return 0; // Return 0 if container not found
     // Find the container price based on the type
     const container = ContainerType.find((c) => c.id === id);
     if (!container) return 0; // Return 0 if container not found
-
+  
     // Return the subtotal for the item
-    // Return the subtotal for the item
-    // Return the subtotal for the item
-    // Return the subtotal for the item
-
-    return typeof container.price === "number" ? container.price * quantity : 0;
+    return container.preOrder
+      ? 0 // Return 0 if container is on pre-order
+      : typeof container.price === "number"
+      ? container.price * quantity
+      : 0;
   };
   // Calculate total subtotal
   const calculateSubtotal = () => {
@@ -214,8 +214,7 @@ const QuoteSummary: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
       ? container.features.map((f: string) => `- ${f}`).join("\n")
       : `- ${container.features}`}
     
-    Price: ${formatPrice(Number(container.price))} each
-
+Price: ${!container.preOrder ? formatPrice(Number(container.price)) : 'Pre-Order'}
     `;
         })
         .filter(Boolean)
@@ -424,7 +423,7 @@ const QuoteSummary: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
                           />
                           <span>{container.type}</span>
                           <span className="ml-2 font-bold">
-                            {formatPrice(Number(container.price))}
+                             {!container.preOrder ? formatPrice(Number(container.price)) : "Pre-Order"}
                           </span>
                           <i className="fas fa-plus ml-2"></i>
                         </button>
@@ -484,7 +483,7 @@ const QuoteSummary: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
                             </div>
                           </div>
                           <div className="text-blue-600 font-bold mt-2">
-                            {formatPrice(Number(container.price))} / unit
+                          {!container.preOrder ? formatPrice(Number(container.price)) : "Pre-Order"} 
                           </div>
                         </div>
                         <div className="md:w-1/4 flex flex-col justify-between mt-4 md:mt-0">
@@ -1188,8 +1187,8 @@ const QuoteSummary: React.FC<QuoteProps> = ({ quoteItem, setQuoteItem }) => {
                             {container.size} | {container.condition}
                           </span>
                           <span className="text-xs">
-                            Qty: {item.quantity} &mdash;{" "}
-                            {formatPrice(Number(container.price))} each
+                          Qty: {item.quantity} &mdash;{" "}
+                          {!container.preOrder ? formatPrice(Number(container.price)) + " each" : "Pre-Order"}
                           </span>
                         </li>
                       );
