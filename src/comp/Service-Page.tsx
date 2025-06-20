@@ -3,15 +3,13 @@ import React, { useState } from "react";
 import Navbar2 from "./com/nvabar2";
 
 import Footer from "./com/footer";
-import firebase from "firebase/compat/app";
-import "firebase/compat/firestore";
-import "firebase/compat/storage";
 
-// Define the QuoteProps type (adjust types as needed)
-interface QuoteProps {
-  quoteItem: any;
-  setQuoteItem: React.Dispatch<React.SetStateAction<any>>;
-}
+
+
+type QuoteProps = {
+  quoteItem: { id: number, quantity: number }[];
+  setQuoteItem: React.Dispatch<React.SetStateAction<{ id: number, quantity: number }[]>>;
+};
 
 const ServicePage: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
   // Service inquiry form state
@@ -492,23 +490,6 @@ const ServicePage: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
       </div>
       {/* Contact Form */}
       
-
-  {/* <div className="flex justify-center mb-12">
-    <a
-      href="#"
-      onClick={e => {
-        e.preventDefault();
-        window.open(
-          "https://form.jotform.com/251654965653569",
-          "blank",
-          "scrollbars=yes,toolbar=no,width=700,height=500"
-        );
-      }}
-      className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors !rounded-button whitespace-nowrap cursor-pointer"
-    >
-      Appointment Request Form
-    </a>
-  </div> */}
       <div id="contact" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -715,61 +696,28 @@ const ServicePage: React.FC<QuoteProps> = ({quoteItem, setQuoteItem}) => {
                
                 <div className="flex justify-center">
                   <button
-                    type="button"
+                  onClick={() => {
+                    // Let the form submit normally to Netlify if valid
+                    // But trigger validation first
+                    const errors: { [key: string]: string } = {};
+                    if (!formData.name.trim()) errors.name = "Name is required";
+                    if (!formData.email.trim()) errors.email = "Email is required";
+                    else if (!/\S+@\S+\.\S+/.test(formData.email)) errors.email = "Email is invalid";
+                    if (!formData.phone.trim()) errors.phone = "Phone number is required";
+                    if (!formData.serviceType) errors.serviceType = "Please select a service type";
+                    if (!formData.details.trim()) errors.details = "Please provide project details";
+                    if (Object.keys(errors).length > 0) {
+                      setFormErrors(errors);
+                      // Prevent submit if errors
+                      const form = document.getElementById("contaform") as HTMLFormElement | null;
+                      if (form) form.reportValidity();
+                      return false;
+                    }
+                    // Otherwise, let the form submit to Netlify
+                    return true;
+                  }}
+                    type="submit"
                     className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors !rounded-button whitespace-nowrap cursor-pointer"
-          onClick={async () => {
-            // Basic validation (reuse handleSubmit logic if needed)
-            const errors: { [key: string]: string } = {};
-            if (!formData.name.trim()) errors.name = "Name is required";
-            if (!formData.email.trim()) {
-              errors.email = "Email is required";
-            } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-              errors.email = "Email is invalid";
-            }
-            if (!formData.phone.trim()) errors.phone = "Phone number is required";
-            if (!formData.serviceType) errors.serviceType = "Please select a service type";
-            if (!formData.details.trim()) errors.details = "Please provide project details";
-            if (Object.keys(errors).length > 0) {
-              setFormErrors(errors);
-              return;
-            }
-
-            try {
-              // Use compat version for Firestore
-              // Your Firebase config (replace with your actual config)
-              const firebaseConfig = {
-                apiKey: "AIzaSyDM5hqZsDLWok1sGw5EDwLZaPQJv7iFO7s",
-                authDomain: "YOUR_AUTH_DOMAIN",
-                projectId: " socialapp-4b08c",
-                storageBucket: "YOUR_STORAGE_BUCKET",
-                messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-                appId: "YOUR_APP_ID"
-              };
-              if (!firebase.apps.length) {
-                firebase.initializeApp(firebaseConfig);
-              }
-              const db = firebase.firestore();
-              await db.collection("serviceRequests").add({
-                ...formData,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-              });
-              setFormSuccess(true);
-              setFormErrors({});
-              setFormData({
-                name: "",
-                email: "",
-                phone: "",
-                serviceType: "",
-                details: "",
-                contactMethod: "email",
-                file: null,
-              });
-              setTimeout(() => setFormSuccess(false), 3000);
-            } catch (err) {
-              setFormErrors({ submit: "Failed to submit. Please try again." });
-            }
-          }}
-             
                   >
                     Submit Request
                   </button>
